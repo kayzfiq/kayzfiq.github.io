@@ -1,5 +1,5 @@
 title = "My Linux Dojo"
-baseURL = 'https://hba.sid.one/'
+baseURL = 'https://kayzfiq.github.io/'
 
 
 # This is what goes in <html lang="">
@@ -47,6 +47,11 @@ theme = "hugo-blog-awesome"
 		startLevel = 2 # ToC starts from H2
 		endLevel = 4 # ToC ends at H4
 		ordered = false # generates <ul> instead of <ol>
+
+[caches]
+  [caches.images]
+    dir = ':cacheDir/images'
+
 
 ############################## English language ################################
 [Languages.en-gb]
