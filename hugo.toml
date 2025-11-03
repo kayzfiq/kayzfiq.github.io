@@ -77,12 +77,12 @@ theme = "hugo-blog-awesome"
     pageRef="projects"
     name = 'Projects'
     url = '/projects/'
-    weight = 20
+    weight = 30
   [[Languages.en-gb.menu.main]]
     pageRef="about"
     name = 'About'
     url = '/about/'
-    weight = 30
+    weight = 40
 
 [Languages.en-gb.params]
   sitename = "Awesome hugo blog"
