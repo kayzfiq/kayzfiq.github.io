@@ -1,2 +1,399 @@
-<link rel="stylesheet" href="/css/prism.css">
-<script src="/js/prism.js"></script>
+<!DOCTYPE html>
+<html lang="en-gb"><head><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=livereload" data-no-instant defer></script><meta charset="utf-8">
+<meta http-equiv="content-type" content="text/html">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title itemprop="name">Today I Learned: Setting up system updates with systemd timer | My Linux Dojo</title>
+<meta property="og:title" content="Today I Learned: Setting up system updates with systemd timer | My Linux Dojo" />
+<meta name="twitter:title" content="Today I Learned: Setting up system updates with systemd timer | My Linux Dojo" />
+<meta itemprop="name" content="Today I Learned: Setting up system updates with systemd timer | My Linux Dojo" />
+<meta name="application-name" content="Today I Learned: Setting up system updates with systemd timer | My Linux Dojo" />
+<meta property="og:site_name" content="Awesome hugo blog" />
+
+<meta name="description" content="Minimal Hugo blog theme with light and dark mode support">
+<meta itemprop="description" content="Minimal Hugo blog theme with light and dark mode support" />
+<meta property="og:description" content="Minimal Hugo blog theme with light and dark mode support" />
+<meta name="twitter:description" content="Minimal Hugo blog theme with light and dark mode support" />
+
+<meta property="og:locale" content="en-gb" />
+<meta name="language" content="en-gb" />
+
+  <link rel="alternate" hreflang="en-gb" href="http://localhost:1313/posts/setting_system_updates_with_systemd_timers/" title="English" />
+
+
+
+
+
+    
+    
+    
+
+    <meta property="og:type" content="article" />
+    <meta property="og:article:published_time" content=2025-11-21T17:20:29&#43;0300 />
+    <meta property="article:published_time" content=2025-11-21T17:20:29&#43;0300 />
+    <meta property="og:url" content="http://localhost:1313/posts/setting_system_updates_with_systemd_timers/" />
+
+    
+    <meta property="og:article:author" content="Kayzfiq aka Dojo-Analyst" />
+    <meta property="article:author" content="Kayzfiq aka Dojo-Analyst" />
+    <meta name="author" content="Kayzfiq aka Dojo-Analyst" />
+    
+    
+
+    
+
+    <script defer type="application/ld+json">
+    {
+        "@context": "http://schema.org",
+        "@type": "Article",
+        "headline": "Today I Learned: Setting up system updates with systemd timer",
+        "author": {
+        "@type": "Person",
+        "name": ""
+        },
+        "datePublished": "2025-11-21",
+        "description": "",
+        "wordCount":  817 ,
+        "mainEntityOfPage": "True",
+        "dateModified": "2025-11-21",
+        "image": {
+        "@type": "imageObject",
+        "url": ""
+        },
+        "publisher": {
+        "@type": "Organization",
+        "name": "My Linux Dojo"
+        }
+    }
+    </script>
+
+
+<meta name="generator" content="Hugo 0.152.2">
+
+    
+    <meta property="og:url" content="http://localhost:1313/posts/setting_system_updates_with_systemd_timers/">
+  <meta property="og:site_name" content="My Linux Dojo">
+  <meta property="og:title" content="Today I Learned: Setting up system updates with systemd timer">
+  <meta property="og:description" content="How I automated Linux system updates with comprehensive logging and learned why systemd timers beat cron
+The Wake-Up Call
+Picture this: You’re managing a handful of Linux servers (or even just one VPS), and you know you should be keeping them updated. Security patches are released constantly, but manually SSH-ing into each server, running apt update &amp;&amp; apt upgrade, waiting for it to complete, and checking for issues is… tedious.">
+  <meta property="og:locale" content="en_gb">
+  <meta property="og:type" content="article">
+    <meta property="article:section" content="posts">
+    <meta property="article:published_time" content="2025-11-21T17:20:29+03:00">
+    <meta property="article:modified_time" content="2025-11-21T17:20:29+03:00">
+
+
+    
+    
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="Today I Learned: Setting up system updates with systemd timer">
+  <meta name="twitter:description" content="How I automated Linux system updates with comprehensive logging and learned why systemd timers beat cron
+The Wake-Up Call
+Picture this: You’re managing a handful of Linux servers (or even just one VPS), and you know you should be keeping them updated. Security patches are released constantly, but manually SSH-ing into each server, running apt update &amp;&amp; apt upgrade, waiting for it to complete, and checking for issues is… tedious.">
+
+
+    
+
+    <link rel="canonical" href="http://localhost:1313/posts/setting_system_updates_with_systemd_timers/">
+    <link href="/style.min.2d921c18cf1ec555ffc03d59a8adc211c402c68c930c27d6a0c306ab175a8d09.css" rel="stylesheet">
+    <link href="/code-highlight.min.706d31975fec544a864cb7f0d847a73ea55ca1df91bf495fd12a177138d807cf.css" rel="stylesheet">
+
+    
+    <link rel="apple-touch-icon" sizes="180x180" href="/icons/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="/icons/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="/icons/favicon-16x16.png">
+    <link rel="mask-icon" href="/icons/safari-pinned-tab.svg">
+    <link rel="shortcut icon" href="/favicon.ico">
+
+
+
+
+<link rel="manifest" href="http://localhost:1313/site.webmanifest">
+
+<meta name="msapplication-config" content="/browserconfig.xml">
+<meta name="msapplication-TileColor" content="#2d89ef">
+<meta name="theme-color" content="#434648">
+    <meta name="color-scheme" content="light dark">
+
+    
+    <link rel="icon" type="image/svg+xml" href="/icons/favicon.svg">
+
+    
+    
+</head>
+<body data-theme = "dark" class="notransition">
+
+<script src="/js/theme.js"></script>
+
+<div class="navbar" role="navigation">
+    <nav class="menu" aria-label="Main Navigation">
+        <a href="http://localhost:1313/" class="logo">
+            <svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" 
+viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" 
+stroke-linejoin="round" class="feather feather-home">
+<title>Home</title>
+<path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path>
+<polyline points="9 22 9 12 15 12 15 22"></polyline>
+</svg>
+        </a>
+        <input type="checkbox" id="menu-trigger" class="menu-trigger" />
+        <label for="menu-trigger">
+            <span class="menu-icon">
+                <svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" stroke="currentColor" fill="none" viewBox="0 0 14 14"><title>Menu</title><path stroke-linecap="round" stroke-linejoin="round" d="M10.595 7L3.40726 7"></path><path stroke-linecap="round" stroke-linejoin="round" d="M10.5096 3.51488L3.49301 3.51488"></path><path stroke-linecap="round" stroke-linejoin="round" d="M10.5096 10.4851H3.49301"></path><path stroke-linecap="round" stroke-linejoin="round" d="M0.5 12.5V1.5C0.5 0.947715 0.947715 0.5 1.5 0.5H12.5C13.0523 0.5 13.5 0.947715 13.5 1.5V12.5C13.5 13.0523 13.0523 13.5 12.5 13.5H1.5C0.947715 13.5 0.5 13.0523 0.5 12.5Z"></path></svg>
+            </span>
+        </label>
+
+        <div class="trigger">
+            <ul class="trigger-container">
+                
+                
+                <li>
+                    <a class="menu-link " href="/">
+                        Home
+                    </a>
+                    
+                </li>
+                
+                <li>
+                    <a class="menu-link active" href="/posts/">
+                        Posts
+                    </a>
+                    
+                </li>
+                
+                <li>
+                    <a class="menu-link " href="/projects/">
+                        Projects
+                    </a>
+                    
+                </li>
+                
+                <li class="menu-separator">
+                    <span>|</span>
+                </li>
+                
+                
+            </ul>
+            <a id="mode" href="#">
+                <svg xmlns="http://www.w3.org/2000/svg" class="mode-sunny" width="21" height="21" viewBox="0 0 14 14" stroke-width="1">
+<title>LIGHT</title><g><circle cx="7" cy="7" r="2.5" fill="none" stroke-linecap="round" stroke-linejoin="round"></circle><line x1="7" y1="0.5" x2="7" y2="2.5" fill="none" stroke-linecap="round" stroke-linejoin="round"></line><line x1="2.4" y1="2.4" x2="3.82" y2="3.82" fill="none" stroke-linecap="round" stroke-linejoin="round"></line><line x1="0.5" y1="7" x2="2.5" y2="7" fill="none" stroke-linecap="round" stroke-linejoin="round"></line><line x1="2.4" y1="11.6" x2="3.82" y2="10.18" fill="none" stroke-linecap="round" stroke-linejoin="round"></line><line x1="7" y1="13.5" x2="7" y2="11.5" fill="none" stroke-linecap="round" stroke-linejoin="round"></line><line x1="11.6" y1="11.6" x2="10.18" y2="10.18" fill="none" stroke-linecap="round" stroke-linejoin="round"></line><line x1="13.5" y1="7" x2="11.5" y2="7" fill="none" stroke-linecap="round" stroke-linejoin="round"></line><line x1="11.6" y1="2.4" x2="10.18" y2="3.82" fill="none" stroke-linecap="round" stroke-linejoin="round"></line></g></svg>
+                <svg xmlns="http://www.w3.org/2000/svg" class="mode-moon" width="21" height="21" viewBox="0 0 14 14" stroke-width="1">
+<title>DARK</title><g><circle cx="7" cy="7" r="2.5" fill="none" stroke-linecap="round" stroke-linejoin="round"></circle><line x1="7" y1="0.5" x2="7" y2="2.5" fill="none" stroke-linecap="round" stroke-linejoin="round"></line><line x1="2.4" y1="2.4" x2="3.82" y2="3.82" fill="none" stroke-linecap="round" stroke-linejoin="round"></line><line x1="0.5" y1="7" x2="2.5" y2="7" fill="none" stroke-linecap="round" stroke-linejoin="round"></line><line x1="2.4" y1="11.6" x2="3.82" y2="10.18" fill="none" stroke-linecap="round" stroke-linejoin="round"></line><line x1="7" y1="13.5" x2="7" y2="11.5" fill="none" stroke-linecap="round" stroke-linejoin="round"></line><line x1="11.6" y1="11.6" x2="10.18" y2="10.18" fill="none" stroke-linecap="round" stroke-linejoin="round"></line><line x1="13.5" y1="7" x2="11.5" y2="7" fill="none" stroke-linecap="round" stroke-linejoin="round"></line><line x1="11.6" y1="2.4" x2="10.18" y2="3.82" fill="none" stroke-linecap="round" stroke-linejoin="round"></line></g></svg>
+            </a>
+        </div>
+    </nav>
+</div>
+
+<div class="wrapper post">
+    <main class="page-content" aria-label="Content">
+        <article>
+            <header class="header">
+                <h1 class="header-title">Today I Learned: Setting up system updates with systemd timer</h1>
+                
+                
+                
+                <div class="post-meta">
+                    <time datetime="2025-11-21T17:20:29&#43;03:00" itemprop="datePublished"> 21 Nov 2025 </time>
+                </div>
+                
+            </header>
+            
+    
+    <details class="toc" ZgotmplZ>
+        <summary><b>Table of Contents</b></summary>
+        <nav id="TableOfContents"></nav>
+    </details>
+            <div class="page-content">
+                <p><em>How I automated Linux system updates with comprehensive logging and learned why systemd timers beat cron</em></p>
+<p><strong>The Wake-Up Call</strong></p>
+<p>Picture this: You&rsquo;re managing a handful of Linux servers (or even just one VPS), and you know you should be keeping them updated. Security patches are released constantly, but manually SSH-ing into each server, running <em><strong>apt update &amp;&amp; apt upgrade</strong></em>, waiting for it to complete, and checking for issues is&hellip; tedious.</p>
+<p>So updates get postponed. &ldquo;I&rsquo;ll do it tomorrow,&rdquo; you tell yourself. Then a week passes. Then a month. Then you read about a critical vulnerability that was patched three weeks ago, and panic sets in.
+There had to be a better way.</p>
+<p><strong>Why Automate System Updates?</strong></p>
+<p>Before diving into the solution, let&rsquo;s talk about why this matters—especially for system Admins like me:</p>
+<ul>
+<li>
+<p><strong>Security First:</strong> Unpatched systems are low-hanging fruit for attackers. In blue team operations, keeping systems updated is defense 101.</p>
+</li>
+<li>
+<p><strong>Consistency:</strong> Automated updates happen on schedule, every time, without fail. No human forgetfulness involved.</p>
+</li>
+<li>
+<p><strong>Audit Trail:</strong> With proper logging, you have a complete record of what was updated and when—crucial for incident response and compliance.</p>
+</li>
+<li>
+<p><strong>Time Savings:</strong> Set it up once, benefit forever. Your time is better spent learning new skills or handling more complex issues.</p>
+</li>
+<li>
+<p><strong>Learning Opportunity:</strong> Building this taught me about systemd, bash scripting, logging practices, and service management—all fundamental sysadmin skills.
+**
+The Traditional Approach: Cron**</p>
+</li>
+</ul>
+<p>Most guides suggest using cron for scheduling tasks:</p>
+<p>This works, but it has limitations:</p>
+<ul>
+<li>❌ Limited logging (redirecting to files is clunky)</li>
+<li>❌ No dependency management</li>
+<li>❌ Harder to debug when things go wrong</li>
+<li>❌ No integration with system logging</li>
+<li>❌ Runs even if system was off at scheduled time</li>
+</ul>
+<p>Enter systemd timers.</p>
+<p><em><strong>Why Systemd Timers Are Better</strong></em></p>
+<p>Systemd timers are the modern replacement for cron, and they offer significant advantages:</p>
+<ul>
+<li>Native logging with <strong>journalctl</strong></li>
+<li>Dependency management (run after network is available)</li>
+<li>Persistent timers (catches up if system was off)</li>
+<li>Easy monitoring with <strong>systemctl status</strong></li>
+<li>Better error handling and failure notifications</li>
+<li>Security hardening options built-in</li>
+</ul>
+<p>My Solution: Three-Part System</p>
+<p>I built a complete automated update system consisting of:</p>
+<ol>
+<li>Bash script - Does the actual updating with comprehensive logging</li>
+<li>Systemd service - Defines how the script runs</li>
+<li>Systemd timer - Schedules when it runs</li>
+</ol>
+<p>Let me walk you through each component.</p>
+<p><strong>Part 1: The Update Script</strong></p>
+<p>I created /usr/local/bin/system-update.sh with these key features:</p>
+<p><strong>Feature 1: Structured Logging</strong></p>
+<p>Every action is logged with timestamps:</p>
+<p>code snippet</p>
+<p>This creates a new log file for each run (e.g., <em><strong>update-2024-11-14_03-00-00.log</strong></em>) while also maintaining a <em><strong>latest.log</strong></em> symlink for quick access.</p>
+<p>Why this matters: When troubleshooting issues or conducting security audits, I need to know exactly what happened and when. These logs provide a complete audit trail.</p>
+<p>Feature 2: Comprehensive Update Process</p>
+<p>The script performs a complete update cycle:</p>
+<p>code snippet</p>
+<p>Each step is wrapped in error handling:</p>
+<p>code snippet</p>
+<p><strong>Lesson learned</strong>: Non-interactive updates are crucial for automation. The <em><strong>-y</strong></em> flag auto-confirms prompts, and proper error handling ensures failures are logged and visible.</p>
+<p><strong>Feature 3: Reboot Detection</strong></p>
+<p>One critical aspect of system updates: some patches require a reboot. My script detects this:</p>
+<p>code snippet</p>
+<p><strong>Why this matters:</strong> In production environments, you need to know when manual intervention is required. I don&rsquo;t auto-reboot because downtime needs to be planned, but I get clear notification that action is needed.</p>
+<p><strong>Feature 4: Automatic Log Cleanup</strong></p>
+<p>Logs shouldn&rsquo;t pile up forever:</p>
+<p>code snippet</p>
+<p>Keeps 30 days of history—enough for troubleshooting and audits, not so much that disk space becomes an issue.</p>
+<p><strong>Feature 5: Disk Space Reporting</strong></p>
+<p>The script includes current disk usage in each log:</p>
+<p>code snippet</p>
+<p>This helps spot trends—if disk usage is climbing, I know to investigate before it becomes critical.</p>
+<p><strong>Part 2: The Systemd Service</strong></p>
+<p>The service file (<em><strong>/etc/systemd/system/system-update.service</strong></em>) defines how the script runs:</p>
+<p>code snippet</p>
+<p>Key Points:
+<em><strong>After=network-online.target</strong></em>: Don&rsquo;t start until network is available (can&rsquo;t update without internet!)</p>
+<p><em><strong>Type=oneshot</strong></em>: Run once and exit (not a continuously running service)</p>
+<p><strong>Security hardening:</strong> This is where I applied blue team thinking. The service runs with:</p>
+<ul>
+<li>
+<p>Private temporary directory (PrivateTmp=yes)</p>
+</li>
+<li>
+<p>No privilege escalation (NoNewPrivileges=true)</p>
+</li>
+<li>
+<p>Read-only system files except what&rsquo;s explicitly needed</p>
+</li>
+<li>
+<p>Home directories hidden from the service</p>
+</li>
+</ul>
+<p><strong>Learning moment:</strong> Understanding systemd security features is crucial for defensive security. Even automated maintenance tasks should follow the principle of least privilege.</p>
+<p><strong>Part 3: The Systemd Timer</strong></p>
+<p>The timer file (/etc/systemd/system/system-update.timer) schedules execution:</p>
+<p>code snippet</p>
+<p>Key Features:</p>
+<p><em>OnCalendar=daily:</em> Runs once per day (defaults to midnight). You can customize this:</p>
+<ul>
+<li>
+<p>OnCalendar=<em>-</em>-* 03:00:00 - Daily at 3 AM</p>
+</li>
+<li>
+<p>OnCalendar=Sun <em>-</em>-* 02:00:00 - Sunday at 2 AM</p>
+</li>
+<li>
+<p>OnCalendar=Mon,Wed,Fri <em>-</em>-* 04:00:00 - Three times per week</p>
+</li>
+</ul>
+<p>Persistent=true: If the system was off at the scheduled time, run as soon as it boots. This is brilliant for laptops or VMs that aren&rsquo;t always on.
+RandomizedDelaySec=15min: Adds random delay up to 15 minutes. If you&rsquo;re managing multiple servers, this prevents them all hammering your mirror servers simultaneously.
+Installation: Putting It All Together
+Here&rsquo;s the complete installation process:</p>
+
+            </div>
+        </article></main>
+</div>
+<footer class="footer">
+    <span class="footer_item"> </span>
+    &nbsp;
+
+    <div class="footer_social-icons">
+<a href="https://github.com/kayzfiq" target="_blank" rel="noopener noreferrer me"
+    title="Github">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+    stroke-linecap="round" stroke-linejoin="round">
+    <path
+        d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22">
+    </path>
+</svg>
+</a>
+<a href="https://x.com/kayz_fiq" target="_blank" rel="noopener noreferrer me"
+    title="X">
+    <svg viewBox="0 0 1200 1227" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+    <path
+        d="M714.163 519.284L1160.89 0H1055.03L667.137 450.887L357.328 0H0L468.492 681.821L0 1226.37H105.866L515.491 750.218L842.672 1226.37H1200L714.137 519.284H714.163ZM569.165 687.828L521.697 619.934L144.011 79.6944H306.615L611.412 515.685L658.88 583.579L1055.08 1150.3H892.476L569.165 687.854V687.828Z"/>
+</svg>
+</a>
+<a href="/index.xml" target="_blank" rel="noopener noreferrer me"
+    title="Rss">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+    stroke-linecap="round" stroke-linejoin="round">
+    <path d="M4 11a9 9 0 0 1 9 9" />
+    <path d="M4 4a16 16 0 0 1 16 16" />
+    <circle cx="5" cy="19" r="1" />
+</svg>
+</a>
+</div>
+    <small class="footer_copyright">
+        © 2025 Kayzfiq aka Dojo-Analyst.
+        Powered by <a href="https://github.com/hugo-sid/hugo-blog-awesome" target="_blank" rel="noopener">Hugo blog awesome</a>.
+    </small>
+</footer><a href="#" title="Go to top" id="totop">
+    <svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" fill="currentColor" stroke="currentColor" viewBox="0 96 960 960">
+    <path d="M283 704.739 234.261 656 480 410.261 725.739 656 677 704.739l-197-197-197 197Z"/>
+</svg>
+
+</a>
+
+
+    
+
+
+
+
+    
+    
+        
+    
+
+    
+    
+        
+    
+
+
+
+    
+    <script async src="http://localhost:1313/js/main.js" ></script>
+
+    
+
+</body>
+</html>
