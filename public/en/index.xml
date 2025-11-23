@@ -1,18 +1,18 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
-    <title>My Linux Dojo</title>
-    <link>http://localhost:1313/</link>
-    <description>Recent content on My Linux Dojo</description>
+    <title>Ens on My Linux Dojo</title>
+    <link>http://localhost:1313/en/</link>
+    <description>Recent content in Ens on My Linux Dojo</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-gb</language>
-    <lastBuildDate>Fri, 21 Nov 2025 17:20:29 +0300</lastBuildDate><atom:link href="http://localhost:1313/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Fri, 21 Nov 2025 17:20:29 +0300</lastBuildDate><atom:link href="http://localhost:1313/en/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>Today I Learned: Setting up system updates with systemd timer</title>
-      <link>http://localhost:1313/posts/setting_system_updates_with_systemd_timers/</link>
+      <link>http://localhost:1313/en/posts/my-first-post/</link>
       <pubDate>Fri, 21 Nov 2025 17:20:29 +0300</pubDate>
       
-      <guid>http://localhost:1313/posts/setting_system_updates_with_systemd_timers/</guid>
+      <guid>http://localhost:1313/en/posts/my-first-post/</guid>
       
       <description>&lt;p&gt;&lt;em&gt;How I automated Linux system updates with comprehensive logging and learned why systemd timers beat cron&lt;/em&gt;&lt;/p&gt;
 &lt;p&gt;&lt;strong&gt;The Wake-Up Call&lt;/strong&gt;&lt;/p&gt;
