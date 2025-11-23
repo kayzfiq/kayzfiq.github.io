@@ -121,6 +121,9 @@ Picture this: You’re managing a handful of Linux servers (or even just one VPS
 
     
     
+      
+
+    
 </head>
 <body data-theme = "dark" class="notransition">
 
@@ -169,6 +172,13 @@ stroke-linejoin="round" class="feather feather-home">
                     
                 </li>
                 
+                <li>
+                    <a class="menu-link " href="/pages/about/">
+                        About Me
+                    </a>
+                    
+                </li>
+                
                 <li class="menu-separator">
                     <span>|</span>
                 </li>
@@ -207,7 +217,7 @@ stroke-linejoin="round" class="feather feather-home">
             <div class="page-content">
                 <p><em>How I automated Linux system updates with comprehensive logging and learned why systemd timers beat cron</em></p>
 <p><strong>The Wake-Up Call</strong></p>
-<p>Picture this: You&rsquo;re managing a handful of Linux servers (or even just one VPS), and you know you should be keeping them updated. Security patches are released constantly, but manually SSH-ing into each server, running <em><strong>apt update &amp;&amp; apt upgrade</strong></em>, waiting for it to complete, and checking for issues is&hellip; tedious.</p>
+<p>Picture this: You&rsquo;re managing a handful of Linux servers (or even just one VPS), and you know you should be keeping them updated. Security patches are released constantly, but manually SSH-ing into each server, running <code>apt update &amp;&amp; apt upgrade</code>, waiting for it to complete, and checking for issues is&hellip; tedious.</p>
 <p>So updates get postponed. &ldquo;I&rsquo;ll do it tomorrow,&rdquo; you tell yourself. Then a week passes. Then a month. Then you read about a critical vulnerability that was patched three weeks ago, and panic sets in.
 There had to be a better way.</p>
 <p><strong>Why Automate System Updates?</strong></p>
@@ -244,10 +254,10 @@ The Traditional Approach: Cron**</p>
 <p><em><strong>Why Systemd Timers Are Better</strong></em></p>
 <p>Systemd timers are the modern replacement for cron, and they offer significant advantages:</p>
 <ul>
-<li>Native logging with <strong>journalctl</strong></li>
+<li>Native logging with <code>journalctl</code></li>
 <li>Dependency management (run after network is available)</li>
 <li>Persistent timers (catches up if system was off)</li>
-<li>Easy monitoring with <strong>systemctl status</strong></li>
+<li>Easy monitoring with <code>systemctl status</code></li>
 <li>Better error handling and failure notifications</li>
 <li>Security hardening options built-in</li>
 </ul>
@@ -260,7 +270,7 @@ The Traditional Approach: Cron**</p>
 </ol>
 <p>Let me walk you through each component.</p>
 <p><strong>Part 1: The Update Script</strong></p>
-<p>I created /usr/local/bin/system-update.sh with these key features:</p>
+<p>I created <code>/usr/local/bin/system-update.sh</code> with these key features:</p>
 <p><strong>Feature 1: Structured Logging</strong></p>
 <p>Every action is logged with timestamps:</p>
 <p>code snippet</p>

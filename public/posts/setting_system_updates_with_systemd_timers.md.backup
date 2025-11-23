@@ -1,6 +1,6 @@
 +++
 date = '2025-11-21T17:20:29+03:00'
-draft = true
+draft = false
 title = 'Today I Learned: Setting up system updates with systemd timer'
 +++
 
@@ -9,7 +9,7 @@ title = 'Today I Learned: Setting up system updates with systemd timer'
 
 **The Wake-Up Call**
 
-Picture this: You're managing a handful of Linux servers (or even just one VPS), and you know you should be keeping them updated. Security patches are released constantly, but manually SSH-ing into each server, running ***apt update && apt upgrade***, waiting for it to complete, and checking for issues is... tedious.
+Picture this: You're managing a handful of Linux servers (or even just one VPS), and you know you should be keeping them updated. Security patches are released constantly, but manually SSH-ing into each server, running `apt update && apt upgrade`, waiting for it to complete, and checking for issues is... tedious.
 
 So updates get postponed. "I'll do it tomorrow," you tell yourself. Then a week passes. Then a month. Then you read about a critical vulnerability that was patched three weeks ago, and panic sets in.
 There had to be a better way.
@@ -49,7 +49,7 @@ Enter systemd timers.
 
 Systemd timers are the modern replacement for cron, and they offer significant advantages:
 
-* Native logging with **journalctl**
+* Native logging with `journalctl`
 * Dependency management (run after network is available)
 * Persistent timers (catches up if system was off)
 * Easy monitoring with **systemctl status**

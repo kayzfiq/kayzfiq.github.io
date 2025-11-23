@@ -11,7 +11,11 @@
     <loc>http://localhost:1313/posts/setting_system_updates_with_systemd_timers/</loc>
     <lastmod>2025-11-21T17:20:29+03:00</lastmod>
   </url><url>
+    <loc>http://localhost:1313/pages/about/</loc>
+  </url><url>
     <loc>http://localhost:1313/categories/</loc>
+  </url><url>
+    <loc>http://localhost:1313/pages/</loc>
   </url><url>
     <loc>http://localhost:1313/tags/</loc>
   </url>

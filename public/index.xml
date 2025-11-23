@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
-    <title>My Linux Dojo</title>
+    <title>Home on My Linux Dojo</title>
     <link>http://localhost:1313/</link>
-    <description>Recent content on My Linux Dojo</description>
+    <description>Recent content in Home on My Linux Dojo</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-gb</language>
     <lastBuildDate>Fri, 21 Nov 2025 17:20:29 +0300</lastBuildDate><atom:link href="http://localhost:1313/index.xml" rel="self" type="application/rss+xml" />
@@ -16,7 +16,18 @@
       
       <description>&lt;p&gt;&lt;em&gt;How I automated Linux system updates with comprehensive logging and learned why systemd timers beat cron&lt;/em&gt;&lt;/p&gt;
 &lt;p&gt;&lt;strong&gt;The Wake-Up Call&lt;/strong&gt;&lt;/p&gt;
-&lt;p&gt;Picture this: You&amp;rsquo;re managing a handful of Linux servers (or even just one VPS), and you know you should be keeping them updated. Security patches are released constantly, but manually SSH-ing into each server, running &lt;em&gt;&lt;strong&gt;apt update &amp;amp;&amp;amp; apt upgrade&lt;/strong&gt;&lt;/em&gt;, waiting for it to complete, and checking for issues is&amp;hellip; tedious.&lt;/p&gt;</description>
+&lt;p&gt;Picture this: You&amp;rsquo;re managing a handful of Linux servers (or even just one VPS), and you know you should be keeping them updated. Security patches are released constantly, but manually SSH-ing into each server, running &lt;code&gt;apt update &amp;amp;&amp;amp; apt upgrade&lt;/code&gt;, waiting for it to complete, and checking for issues is&amp;hellip; tedious.&lt;/p&gt;</description>
+      
+    </item>
+    
+    <item>
+      <title>About Me</title>
+      <link>http://localhost:1313/pages/about/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>http://localhost:1313/pages/about/</guid>
+      
+      <description>&lt;p&gt;Put Content Some Content About YourSelf On This Page**&lt;/p&gt;</description>
       
     </item>
     

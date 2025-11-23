@@ -10,6 +10,7 @@ defaultContentLanguage = "en-gb"
 
 # Enable emojis globally
 enableEmoji = true
+
 ignoreErrors = ["additional-script-loading-error"] # ignore error of loading additional scripts.
 
 # traditional way: theme component resides in directory 'themes'
@@ -40,7 +41,18 @@ theme = "hugo-blog-awesome"
 # set markup.highlight.noClasses=false to enable code highlight
 [markup]
   [markup.highlight]
+    anchorLineNos = false
+    codeFences = true
+    guessSyntax = false
+    h1_Lines = ''
+    lineAnchors = ''
+    lineNoStart = 1
+    lineNos = false
+    lineNumbersInTable = true
     noClasses = false
+    noH1 = true
+    style = "tokyonight-storm"
+    tabWidth = 4
   [markup.goldmark.renderer]
     unsafe = true
 	[markup.tableOfContents]
@@ -74,9 +86,9 @@ theme = "hugo-blog-awesome"
     url = '/posts/'
     weight = 20
   [[Language.en-gb.menu.main]]
-    pageRef="Linux_Lessons"
+    pageRef="linux_Lessons"
     name = 'Linux Lessons'
-    url = '/Linux/'
+    url = '/linux/'
     weight = 30
   [[Languages.en-gb.menu.main]]
     pageRef="projects"
@@ -84,9 +96,9 @@ theme = "hugo-blog-awesome"
     url = '/projects/'
     weight = 40
   [[Language.en-gb.menu.main]]
-    pageRef="About"
-    name = 'About Me'
-    url = '/About/'
+    pageRef="about"
+    name = 'About'
+    url = '/about/'
     weight = 50
 
 [Languages.en-gb.params]

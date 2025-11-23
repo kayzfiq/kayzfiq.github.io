@@ -52,7 +52,7 @@ Systemd timers are the modern replacement for cron, and they offer significant a
 * Native logging with `journalctl`
 * Dependency management (run after network is available)
 * Persistent timers (catches up if system was off)
-* Easy monitoring with `systemctl status`
+* Easy monitoring with **systemctl status**
 * Better error handling and failure notifications
 * Security hardening options built-in
 
@@ -69,7 +69,7 @@ Let me walk you through each component.
 
 **Part 1: The Update Script**
 
-I created `/usr/local/bin/system-update.sh` with these key features:
+I created /usr/local/bin/system-update.sh with these key features:
 
 **Feature 1: Structured Logging**
 
