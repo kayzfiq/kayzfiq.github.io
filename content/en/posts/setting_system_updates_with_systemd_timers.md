@@ -4,17 +4,17 @@ draft = false
 title = 'Today I Learned: Setting up system updates with systemd timer'
 +++
 
-*How I automated Linux system updates with comprehensive logging and learned why systemd timers beat cron*
+### How I automated Linux system updates with comprehensive logging and learned why systemd timers beat cron
 
 
-**The Wake-Up Call**
+## The Wake-Up Call
 
 Picture this: You're managing a handful of Linux servers (or even just one VPS), and you know you should be keeping them updated. Security patches are released constantly, but manually SSH-ing into each server, running `apt update && apt upgrade`, waiting for it to complete, and checking for issues is... tedious.
 
 So updates get postponed. "I'll do it tomorrow," you tell yourself. Then a week passes. Then a month. Then you read about a critical vulnerability that was patched three weeks ago, and panic sets in.
 There had to be a better way.
 
-**Why Automate System Updates?**
+## Why Automate System Updates?
 
 Before diving into the solution, let's talk about why this matters—especially for system Admins like me:
 
@@ -27,8 +27,9 @@ Before diving into the solution, let's talk about why this matters—especially 
 * **Time Savings:** Set it up once, benefit forever. Your time is better spent learning new skills or handling more complex issues.
 
 * **Learning Opportunity:** Building this taught me about systemd, bash scripting, logging practices, and service management—all fundamental sysadmin skills.
-**
-The Traditional Approach: Cron**
+
+
+**The Traditional Approach: Cron**
 
 Most guides suggest using cron for scheduling tasks:
 
@@ -60,7 +61,7 @@ Systemd timers are the modern replacement for cron, and they offer significant a
 * Security hardening options built-in
 
 
-My Solution: Three-Part System
+## My Solution: Three-Part System
 
 I built a complete automated update system consisting of:
 
@@ -70,7 +71,7 @@ I built a complete automated update system consisting of:
 
 Let me walk you through each component.
 
-**Part 1: The Update Script**
+### Part 1: The Update Script
 
 I created `/usr/local/bin/system-update.sh` with these key features:
 
@@ -170,7 +171,7 @@ df -h / | tee -a "$LOG_FILE"
 
 This helps spot trends—if disk usage is climbing, I know to investigate before it becomes critical.
 
-**Part 2: The Systemd Service**
+### Part 2: The Systemd Service
 	
 The service file (`/etc/systemd/system/system-update.service`) defines how the script runs:
 
@@ -214,7 +215,7 @@ Key Points:
 
 **Learning moment:** Understanding systemd security features is crucial for defensive security. Even automated maintenance tasks should follow the principle of least privilege.
 
-**Part 3: The Systemd Timer**
+### Part 3: The Systemd Timer
 
 The timer file (`/etc/systemd/system/system-update.timer`) schedules execution:
 
@@ -246,7 +247,7 @@ Key Features:
 
 `RandomizedDelaySec=15min:` Adds random delay up to 15 minutes. If you're managing multiple servers, this prevents them all hammering your mirror servers simultaneously.
 
-**Installation: Putting It All Together**
+### Installation: Putting It All Together
 
 Here's the complete installation process:
 ```
@@ -280,14 +281,15 @@ sudo systemctl status system-update.service
 sudo cat /var/log/system-updates/latest.log
 ```
 
-**Lessons Learned**
+### Lessons Learned
+
 1. **First Test**: I initially had an `Exec format error` in the `.service` file that always had it fail to run the bash script. I resolved it by adding `/bin/bash` to the path where the script is located in the `system_update,service` file.
 2. **Check logs regularly**: Even automated systems need monitoring. I added a weekly calendar reminder to review the logs.
 3. **Plan for reboots:** The script detects but doesn't auto-reboot. I created a separate process to review reboot notifications and schedule maintenance windows.
 4. **Customize the schedule:** I started with daily updates at midnight but moved to 3 AM after realizing I sometimes have late-night SSH sessions that would get interrupted.
 5. **Log rotation is crucial:** Without the 30-day cleanup, logs would eventually fill the disk. I tested this by temporarily setting retention to 7 days.
 
-**Troubleshooting Common Issues**
+### Troubleshooting Common Issues
 
 **Problem: Timer shows as "dead"**
 ```
@@ -349,7 +351,7 @@ Building this automated update system taught me far more than just "how to sched
 
 These skills directly support my goal of moving from system administration to cybersecurity engineering. Understanding how to secure and maintain infrastructure is fundamental to defending it.
 
-**Resources & Code**
+### Resources & Code
 
 The complete code for this project is available in my GitHub repository:
 [Linux SysAdmin Toolkit - System Updates](https://github.com/kayzfiq/linux-sysadmin-toolkit/tree/main/automation/system-updates)

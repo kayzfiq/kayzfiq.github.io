@@ -53,7 +53,7 @@
         },
         "datePublished": "2025-11-21",
         "description": "",
-        "wordCount":  817 ,
+        "wordCount":  1542 ,
         "mainEntityOfPage": "True",
         "dateModified": "2025-11-21",
         "image": {
@@ -74,9 +74,7 @@
     <meta property="og:url" content="http://localhost:1313/posts/setting_system_updates_with_systemd_timers/">
   <meta property="og:site_name" content="My Linux Dojo">
   <meta property="og:title" content="Today I Learned: Setting up system updates with systemd timer">
-  <meta property="og:description" content="How I automated Linux system updates with comprehensive logging and learned why systemd timers beat cron
-The Wake-Up Call
-Picture this: You’re managing a handful of Linux servers (or even just one VPS), and you know you should be keeping them updated. Security patches are released constantly, but manually SSH-ing into each server, running apt update &amp;&amp; apt upgrade, waiting for it to complete, and checking for issues is… tedious.">
+  <meta property="og:description" content="How I automated Linux system updates with comprehensive logging and learned why systemd timers beat cron The Wake-Up Call Picture this: You’re managing a handful of Linux servers (or even just one VPS), and you know you should be keeping them updated. Security patches are released constantly, but manually SSH-ing into each server, running apt update &amp;&amp; apt upgrade, waiting for it to complete, and checking for issues is… tedious.">
   <meta property="og:locale" content="en_gb">
   <meta property="og:type" content="article">
     <meta property="article:section" content="posts">
@@ -88,9 +86,7 @@ Picture this: You’re managing a handful of Linux servers (or even just one VPS
     
   <meta name="twitter:card" content="summary">
   <meta name="twitter:title" content="Today I Learned: Setting up system updates with systemd timer">
-  <meta name="twitter:description" content="How I automated Linux system updates with comprehensive logging and learned why systemd timers beat cron
-The Wake-Up Call
-Picture this: You’re managing a handful of Linux servers (or even just one VPS), and you know you should be keeping them updated. Security patches are released constantly, but manually SSH-ing into each server, running apt update &amp;&amp; apt upgrade, waiting for it to complete, and checking for issues is… tedious.">
+  <meta name="twitter:description" content="How I automated Linux system updates with comprehensive logging and learned why systemd timers beat cron The Wake-Up Call Picture this: You’re managing a handful of Linux servers (or even just one VPS), and you know you should be keeping them updated. Security patches are released constantly, but manually SSH-ing into each server, running apt update &amp;&amp; apt upgrade, waiting for it to complete, and checking for issues is… tedious.">
 
 
     
@@ -120,9 +116,6 @@ Picture this: You’re managing a handful of Linux servers (or even just one VPS
     <link rel="icon" type="image/svg+xml" href="/icons/favicon.svg">
 
     
-    
-      
-
     
 </head>
 <body data-theme = "dark" class="notransition">
@@ -212,15 +205,36 @@ stroke-linejoin="round" class="feather feather-home">
     
     <details class="toc" ZgotmplZ>
         <summary><b>Table of Contents</b></summary>
-        <nav id="TableOfContents"></nav>
+        <nav id="TableOfContents">
+  <ul>
+    <li>
+      <ul>
+        <li><a href="#how-i-automated-linux-system-updates-with-comprehensive-logging-and-learned-why-systemd-timers-beat-cron">How I automated Linux system updates with comprehensive logging and learned why systemd timers beat cron</a></li>
+      </ul>
+    </li>
+    <li><a href="#the-wake-up-call">The Wake-Up Call</a></li>
+    <li><a href="#why-automate-system-updates">Why Automate System Updates?</a></li>
+    <li><a href="#my-solution-three-part-system">My Solution: Three-Part System</a>
+      <ul>
+        <li><a href="#part-1-the-update-script">Part 1: The Update Script</a></li>
+        <li><a href="#part-2-the-systemd-service">Part 2: The Systemd Service</a></li>
+        <li><a href="#part-3-the-systemd-timer">Part 3: The Systemd Timer</a></li>
+        <li><a href="#installation-putting-it-all-together">Installation: Putting It All Together</a></li>
+        <li><a href="#lessons-learned">Lessons Learned</a></li>
+        <li><a href="#troubleshooting-common-issues">Troubleshooting Common Issues</a></li>
+        <li><a href="#resources--code">Resources &amp; Code</a></li>
+      </ul>
+    </li>
+  </ul>
+</nav>
     </details>
             <div class="page-content">
-                <p><em>How I automated Linux system updates with comprehensive logging and learned why systemd timers beat cron</em></p>
-<p><strong>The Wake-Up Call</strong></p>
+                <h3 id="how-i-automated-linux-system-updates-with-comprehensive-logging-and-learned-why-systemd-timers-beat-cron">How I automated Linux system updates with comprehensive logging and learned why systemd timers beat cron</h3>
+<h2 id="the-wake-up-call">The Wake-Up Call</h2>
 <p>Picture this: You&rsquo;re managing a handful of Linux servers (or even just one VPS), and you know you should be keeping them updated. Security patches are released constantly, but manually SSH-ing into each server, running <code>apt update &amp;&amp; apt upgrade</code>, waiting for it to complete, and checking for issues is&hellip; tedious.</p>
 <p>So updates get postponed. &ldquo;I&rsquo;ll do it tomorrow,&rdquo; you tell yourself. Then a week passes. Then a month. Then you read about a critical vulnerability that was patched three weeks ago, and panic sets in.
 There had to be a better way.</p>
-<p><strong>Why Automate System Updates?</strong></p>
+<h2 id="why-automate-system-updates">Why Automate System Updates?</h2>
 <p>Before diving into the solution, let&rsquo;s talk about why this matters—especially for system Admins like me:</p>
 <ul>
 <li>
@@ -236,13 +250,14 @@ There had to be a better way.</p>
 <p><strong>Time Savings:</strong> Set it up once, benefit forever. Your time is better spent learning new skills or handling more complex issues.</p>
 </li>
 <li>
-<p><strong>Learning Opportunity:</strong> Building this taught me about systemd, bash scripting, logging practices, and service management—all fundamental sysadmin skills.
-**
-The Traditional Approach: Cron**</p>
+<p><strong>Learning Opportunity:</strong> Building this taught me about systemd, bash scripting, logging practices, and service management—all fundamental sysadmin skills.</p>
 </li>
 </ul>
+<p><strong>The Traditional Approach: Cron</strong></p>
 <p>Most guides suggest using cron for scheduling tasks:</p>
-<p>This works, but it has limitations:</p>
+<pre tabindex="0"><code># Run updates daily at 3 AM
+0 3 * * * /usr/bin/apt update &amp;&amp; /usr/bin/apt upgrade -y
+</code></pre><p>This works, but it has limitations:</p>
 <ul>
 <li>❌ Limited logging (redirecting to files is clunky)</li>
 <li>❌ No dependency management</li>
@@ -261,52 +276,109 @@ The Traditional Approach: Cron**</p>
 <li>Better error handling and failure notifications</li>
 <li>Security hardening options built-in</li>
 </ul>
-<p>My Solution: Three-Part System</p>
+<h2 id="my-solution-three-part-system">My Solution: Three-Part System</h2>
 <p>I built a complete automated update system consisting of:</p>
 <ol>
-<li>Bash script - Does the actual updating with comprehensive logging</li>
-<li>Systemd service - Defines how the script runs</li>
-<li>Systemd timer - Schedules when it runs</li>
+<li><code>Bash script</code> - Does the actual updating with comprehensive logging</li>
+<li><code>Systemd service</code> - Defines how the script runs</li>
+<li><code>Systemd timer</code> - Schedules when it runs</li>
 </ol>
 <p>Let me walk you through each component.</p>
-<p><strong>Part 1: The Update Script</strong></p>
+<h3 id="part-1-the-update-script">Part 1: The Update Script</h3>
 <p>I created <code>/usr/local/bin/system-update.sh</code> with these key features:</p>
 <p><strong>Feature 1: Structured Logging</strong></p>
 <p>Every action is logged with timestamps:</p>
-<p>code snippet</p>
-<p>This creates a new log file for each run (e.g., <em><strong>update-2024-11-14_03-00-00.log</strong></em>) while also maintaining a <em><strong>latest.log</strong></em> symlink for quick access.</p>
+<pre tabindex="0"><code>LOG_DIR=&#34;/var/log/system-updates&#34;
+LOG_FILE=&#34;${LOG_DIR}/update-$(date +%Y-%m-%d_%H-%M-%S).log&#34;
+
+log_message() {
+    echo &#34;[$(date &#39;+%Y-%m-%d %H:%M:%S&#39;)] $1&#34; | tee -a &#34;$LOG_FILE&#34;
+}
+</code></pre><p>This creates a new log file for each run (e.g., <code>update-2024-11-14_03-00-00.log</code>) while also maintaining a <code>latest.log</code> symlink for quick access.</p>
 <p>Why this matters: When troubleshooting issues or conducting security audits, I need to know exactly what happened and when. These logs provide a complete audit trail.</p>
 <p>Feature 2: Comprehensive Update Process</p>
 <p>The script performs a complete update cycle:</p>
-<p>code snippet</p>
-<p>Each step is wrapped in error handling:</p>
-<p>code snippet</p>
-<p><strong>Lesson learned</strong>: Non-interactive updates are crucial for automation. The <em><strong>-y</strong></em> flag auto-confirms prompts, and proper error handling ensures failures are logged and visible.</p>
+<pre tabindex="0"><code># 1. Update package lists
+apt-get update
+
+# 2. Upgrade packages (non-interactive)
+apt-get upgrade -y
+
+# 3. Full upgrade (handles dependencies)
+apt-get full-upgrade -y
+
+# 4. Remove unnecessary packages
+apt-get autoremove -y
+
+# 5. Clean up cache
+apt-get autoclean
+</code></pre><p>Each step is wrapped in error handling:</p>
+<pre tabindex="0"><code>run_command() {
+    log_message &#34;Running: $1&#34;
+    eval &#34;$1&#34; &gt;&gt; &#34;$LOG_FILE&#34; 2&gt;&amp;1
+    local exit_code=$?
+    if [ $exit_code -eq 0 ]; then
+        log_message &#34;✓ Command completed successfully&#34;
+    else
+        log_message &#34;✗ Command failed with exit code: $exit_code&#34;
+    fi
+    return $exit_code
+}
+</code></pre><p><strong>Lesson learned</strong>: Non-interactive updates are crucial for automation. The <code>-y</code> flag auto-confirms prompts, and proper error handling ensures failures are logged and visible.</p>
 <p><strong>Feature 3: Reboot Detection</strong></p>
 <p>One critical aspect of system updates: some patches require a reboot. My script detects this:</p>
-<p>code snippet</p>
-<p><strong>Why this matters:</strong> In production environments, you need to know when manual intervention is required. I don&rsquo;t auto-reboot because downtime needs to be planned, but I get clear notification that action is needed.</p>
+<pre tabindex="0"><code>if [ -f /var/run/reboot-required ]; then
+    log_message &#34;⚠ REBOOT REQUIRED!&#34;
+    log_message &#34;Packages requiring reboot:&#34;
+    cat /var/run/reboot-required.pkgs &gt;&gt; &#34;$LOG_FILE&#34; 2&gt;&amp;1
+else
+    log_message &#34;✓ No reboot required&#34;
+fi
+</code></pre><p><strong>Why this matters:</strong> In production environments, you need to know when manual intervention is required. I don&rsquo;t auto-reboot because downtime needs to be planned, but I get clear notification that action is needed.</p>
 <p><strong>Feature 4: Automatic Log Cleanup</strong></p>
 <p>Logs shouldn&rsquo;t pile up forever:</p>
-<p>code snippet</p>
-<p>Keeps 30 days of history—enough for troubleshooting and audits, not so much that disk space becomes an issue.</p>
+<pre tabindex="0"><code>RETENTION_DAYS=30
+
+# Clean up old logs
+find &#34;$LOG_DIR&#34; -name &#34;update-*.log&#34; -type f -mtime +${RETENTION_DAYS} -delete
+</code></pre><p>Keeps 30 days of history—enough for troubleshooting and audits, not so much that disk space becomes an issue.</p>
 <p><strong>Feature 5: Disk Space Reporting</strong></p>
 <p>The script includes current disk usage in each log:</p>
-<p>code snippet</p>
-<p>This helps spot trends—if disk usage is climbing, I know to investigate before it becomes critical.</p>
-<p><strong>Part 2: The Systemd Service</strong></p>
-<p>The service file (<em><strong>/etc/systemd/system/system-update.service</strong></em>) defines how the script runs:</p>
-<p>code snippet</p>
-<p>Key Points:
-<em><strong>After=network-online.target</strong></em>: Don&rsquo;t start until network is available (can&rsquo;t update without internet!)</p>
-<p><em><strong>Type=oneshot</strong></em>: Run once and exit (not a continuously running service)</p>
+<pre tabindex="0"><code>log_message &#34;Current disk usage:&#34;
+df -h / | tee -a &#34;$LOG_FILE&#34;
+</code></pre><p>This helps spot trends—if disk usage is climbing, I know to investigate before it becomes critical.</p>
+<h3 id="part-2-the-systemd-service">Part 2: The Systemd Service</h3>
+<p>The service file (<code>/etc/systemd/system/system-update.service</code>) defines how the script runs:</p>
+<pre tabindex="0"><code>[Unit]
+Description=Automated System Update and Upgrade
+After=network-online.target
+Wants=network-online.target
+
+[Service]
+Type=oneshot
+ExecStart=/usr/local/bin/system-update.sh
+StandardOutput=journal
+StandardError=journal
+
+# Security hardening
+PrivateTmp=yes
+NoNewPrivileges=true
+ProtectSystem=strict
+ProtectHome=yes
+ReadWritePaths=/var/log/system-updates /var/lib/apt /var/cache/apt /var/lib/dpkg
+
+[Install]
+WantedBy=multi-user.target
+</code></pre><p>Key Points:
+<code>After=network-online.target</code>: Don&rsquo;t start until network is available (can&rsquo;t update without internet!)</p>
+<p><code>Type=oneshot</code>: Run once and exit (not a continuously running service)</p>
 <p><strong>Security hardening:</strong> This is where I applied blue team thinking. The service runs with:</p>
 <ul>
 <li>
-<p>Private temporary directory (PrivateTmp=yes)</p>
+<p>Private temporary directory (<code>PrivateTmp=yes</code>)</p>
 </li>
 <li>
-<p>No privilege escalation (NoNewPrivileges=true)</p>
+<p>No privilege escalation (<code>NoNewPrivileges=true</code>)</p>
 </li>
 <li>
 <p>Read-only system files except what&rsquo;s explicitly needed</p>
@@ -316,26 +388,122 @@ The Traditional Approach: Cron**</p>
 </li>
 </ul>
 <p><strong>Learning moment:</strong> Understanding systemd security features is crucial for defensive security. Even automated maintenance tasks should follow the principle of least privilege.</p>
-<p><strong>Part 3: The Systemd Timer</strong></p>
-<p>The timer file (/etc/systemd/system/system-update.timer) schedules execution:</p>
-<p>code snippet</p>
-<p>Key Features:</p>
-<p><em>OnCalendar=daily:</em> Runs once per day (defaults to midnight). You can customize this:</p>
+<h3 id="part-3-the-systemd-timer">Part 3: The Systemd Timer</h3>
+<p>The timer file (<code>/etc/systemd/system/system-update.timer</code>) schedules execution:</p>
+<pre tabindex="0"><code>[Unit]
+Description=Run system updates automatically
+Requires=system-update.service
+
+[Timer]
+OnCalendar=daily
+Persistent=true
+RandomizedDelaySec=15min
+
+[Install]
+WantedBy=timers.target
+</code></pre><p>Key Features:</p>
+<p><code>OnCalendar=daily:</code> Runs once per day (defaults to midnight). You can customize this:</p>
 <ul>
 <li>
-<p>OnCalendar=<em>-</em>-* 03:00:00 - Daily at 3 AM</p>
+<p><code>OnCalendar=*-*-* 03:00:00</code> - Daily at 3 AM</p>
 </li>
 <li>
-<p>OnCalendar=Sun <em>-</em>-* 02:00:00 - Sunday at 2 AM</p>
+<p><code>OnCalendar=Sun *-*-* 02:00:00</code> - Sunday at 2 AM</p>
 </li>
 <li>
-<p>OnCalendar=Mon,Wed,Fri <em>-</em>-* 04:00:00 - Three times per week</p>
+<p><code>OnCalendar=Mon,Wed,Fri *-*-* 04:00:00</code> - Three times per week</p>
 </li>
 </ul>
-<p>Persistent=true: If the system was off at the scheduled time, run as soon as it boots. This is brilliant for laptops or VMs that aren&rsquo;t always on.
-RandomizedDelaySec=15min: Adds random delay up to 15 minutes. If you&rsquo;re managing multiple servers, this prevents them all hammering your mirror servers simultaneously.
-Installation: Putting It All Together
-Here&rsquo;s the complete installation process:</p>
+<p><code>Persistent=true:</code> If the system was off at the scheduled time, run as soon as it boots. This is brilliant for laptops or VMs that aren&rsquo;t always on.</p>
+<p><code>RandomizedDelaySec=15min:</code> Adds random delay up to 15 minutes. If you&rsquo;re managing multiple servers, this prevents them all hammering your mirror servers simultaneously.</p>
+<h3 id="installation-putting-it-all-together">Installation: Putting It All Together</h3>
+<p>Here&rsquo;s the complete installation process:</p>
+<pre tabindex="0"><code># 1. Copy the script
+sudo cp system-update.sh /usr/local/bin/
+sudo chmod +x /usr/local/bin/system-update.sh
+
+# 2. Copy service files
+sudo cp system-update.service /etc/systemd/system/
+sudo cp system-update.timer /etc/systemd/system/
+
+# 3. Reload systemd
+sudo systemctl daemon-reload
+
+# 4. Enable and start the timer
+sudo systemctl enable system-update.timer
+sudo systemctl start system-update.timer
+
+# 5. Verify it&#39;s working
+systemctl status system-update.timer
+systemctl list-timers system-update.timer
+</code></pre><p><strong>Pro tip:</strong> Test the service manually before relying on the timer:</p>
+<pre tabindex="0"><code>sudo systemctl start system-update.service
+sudo systemctl status system-update.service
+sudo cat /var/log/system-updates/latest.log
+</code></pre><h3 id="lessons-learned">Lessons Learned</h3>
+<ol>
+<li><strong>First Test</strong>: I initially had an <code>Exec format error</code> in the <code>.service</code> file that always had it fail to run the bash script. I resolved it by adding <code>/bin/bash</code> to the path where the script is located in the <code>system_update,service</code> file.</li>
+<li><strong>Check logs regularly</strong>: Even automated systems need monitoring. I added a weekly calendar reminder to review the logs.</li>
+<li><strong>Plan for reboots:</strong> The script detects but doesn&rsquo;t auto-reboot. I created a separate process to review reboot notifications and schedule maintenance windows.</li>
+<li><strong>Customize the schedule:</strong> I started with daily updates at midnight but moved to 3 AM after realizing I sometimes have late-night SSH sessions that would get interrupted.</li>
+<li><strong>Log rotation is crucial:</strong> Without the 30-day cleanup, logs would eventually fill the disk. I tested this by temporarily setting retention to 7 days.</li>
+</ol>
+<h3 id="troubleshooting-common-issues">Troubleshooting Common Issues</h3>
+<p><strong>Problem: Timer shows as &ldquo;dead&rdquo;</strong></p>
+<pre tabindex="0"><code># Check timer status
+systemctl status system-update.timer
+
+# If dead, restart it
+sudo systemctl restart system-update.timer
+</code></pre><p><strong>Problem: Service failing</strong></p>
+<pre tabindex="0"><code># View detailed errors
+sudo journalctl -xe -u system-update.service
+
+# Common causes:
+# - Script not executable: chmod +x /usr/local/bin/system-update.sh
+# - Wrong path in service file: Check ExecStart path
+# - Permission issues: Verify ReadWritePaths in service file
+</code></pre><p><strong>Problem: Updates not running at scheduled time</strong></p>
+<pre tabindex="0"><code># Verify timer is enabled
+systemctl is-enabled system-update.timer
+
+# Check when it will run next
+systemctl list-timers system-update.timer
+
+# View timer configuration
+systemctl cat system-update.timer
+</code></pre><p><strong>Problem: Logs not being created</strong></p>
+<pre tabindex="0"><code># Create log directory manually
+sudo mkdir -p /var/log/system-updates
+
+# Check script has write access
+sudo ls -ld /var/log/system-updates
+
+# Test script manually
+sudo /usr/local/bin/system-update.sh
+</code></pre><p><strong>The Bigger Picture</strong></p>
+<p>Building this automated update system taught me far more than just &ldquo;how to schedule updates.&rdquo; I learned:</p>
+<p>**Systemd architecture: **Understanding services, timers, targets, and dependencies.</p>
+<p>**Security hardening: **Applying defense-in-depth to even maintenance tasks.</p>
+<p><strong>Operational practices:</strong> Logging, monitoring, and audit trails.</p>
+<p><strong>Bash scripting:</strong> Error handling, functions, and best practices</p>
+<p><strong>System administration philosophy:</strong> Automation, documentation, and reliability.</p>
+<p>These skills directly support my goal of moving from system administration to cybersecurity engineering. Understanding how to secure and maintain infrastructure is fundamental to defending it.</p>
+<h3 id="resources--code">Resources &amp; Code</h3>
+<p>The complete code for this project is available in my GitHub repository:
+<a href="https://github.com/kayzfiq/linux-sysadmin-toolkit/tree/main/automation/system-updates">Linux SysAdmin Toolkit - System Updates</a></p>
+<p>The repository includes:</p>
+<ul>
+<li>Complete, commented source code</li>
+<li>Detailed installation instructions</li>
+<li>Troubleshooting guide</li>
+<li>Example logs</li>
+</ul>
+<p><strong>Conclusion</strong></p>
+<p>Automating system updates might seem like a simple task, but doing it properly—with logging, error handling, security hardening, and monitoring—requires thoughtful design. This project gave me hands-on experience with essential system administration skills while creating a tool I&rsquo;ll use throughout my career.</p>
+<p><strong>Your Turn</strong></p>
+<p>Have you automated your system updates? What challenges did you face? What improvements would you suggest? Drop your thoughts in the comments!</p>
+<p><strong>Found this helpful?</strong> Star the <a href="https://github.com/kayzfiq/linux-sysadmin-toolkit/tree/main/automation/system-updates">GitHub repository</a> and share with others learning Linux administration.</p>
 
             </div>
         </article></main>

@@ -14,8 +14,8 @@
       
       <guid>http://localhost:1313/posts/setting_system_updates_with_systemd_timers/</guid>
       
-      <description>&lt;p&gt;&lt;em&gt;How I automated Linux system updates with comprehensive logging and learned why systemd timers beat cron&lt;/em&gt;&lt;/p&gt;
-&lt;p&gt;&lt;strong&gt;The Wake-Up Call&lt;/strong&gt;&lt;/p&gt;
+      <description>&lt;h3 id=&#34;how-i-automated-linux-system-updates-with-comprehensive-logging-and-learned-why-systemd-timers-beat-cron&#34;&gt;How I automated Linux system updates with comprehensive logging and learned why systemd timers beat cron&lt;/h3&gt;
+&lt;h2 id=&#34;the-wake-up-call&#34;&gt;The Wake-Up Call&lt;/h2&gt;
 &lt;p&gt;Picture this: You&amp;rsquo;re managing a handful of Linux servers (or even just one VPS), and you know you should be keeping them updated. Security patches are released constantly, but manually SSH-ing into each server, running &lt;code&gt;apt update &amp;amp;&amp;amp; apt upgrade&lt;/code&gt;, waiting for it to complete, and checking for issues is&amp;hellip; tedious.&lt;/p&gt;</description>
       
     </item>
@@ -27,7 +27,10 @@
       
       <guid>http://localhost:1313/pages/about/</guid>
       
-      <description>&lt;p&gt;Put Content Some Content About YourSelf On This Page**&lt;/p&gt;</description>
+      <description>&lt;h2 id=&#34;hi-im-kaye-shafiq&#34;&gt;Hi, I&amp;rsquo;m Kaye Shafiq&lt;/h2&gt;
+&lt;p&gt;I&amp;rsquo;m a Cybersecurity enthusiast on a mission to transition from network engineering to blue team security operations. Based in Kampala, Uganda, I&amp;rsquo;m building the technical foundation needed to defend systems and networks against real-world threats.&lt;/p&gt;
+&lt;h2 id=&#34;my-journey&#34;&gt;My Journey&lt;/h2&gt;
+&lt;p&gt;My path into cybersecurity started with networking. After earning my CCNA certification, I gained a solid understanding of how data flows, how networks are structured, and—crucially—where vulnerabilities exist. But I realized that to truly protect systems, I needed to understand them at a deeper level.&lt;/p&gt;</description>
       
     </item>
     

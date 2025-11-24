@@ -14,8 +14,8 @@
       
       <guid>http://localhost:1313/posts/setting_system_updates_with_systemd_timers/</guid>
       
-      <description>&lt;p&gt;&lt;em&gt;How I automated Linux system updates with comprehensive logging and learned why systemd timers beat cron&lt;/em&gt;&lt;/p&gt;
-&lt;p&gt;&lt;strong&gt;The Wake-Up Call&lt;/strong&gt;&lt;/p&gt;
+      <description>&lt;h3 id=&#34;how-i-automated-linux-system-updates-with-comprehensive-logging-and-learned-why-systemd-timers-beat-cron&#34;&gt;How I automated Linux system updates with comprehensive logging and learned why systemd timers beat cron&lt;/h3&gt;
+&lt;h2 id=&#34;the-wake-up-call&#34;&gt;The Wake-Up Call&lt;/h2&gt;
 &lt;p&gt;Picture this: You&amp;rsquo;re managing a handful of Linux servers (or even just one VPS), and you know you should be keeping them updated. Security patches are released constantly, but manually SSH-ing into each server, running &lt;code&gt;apt update &amp;amp;&amp;amp; apt upgrade&lt;/code&gt;, waiting for it to complete, and checking for issues is&amp;hellip; tedious.&lt;/p&gt;</description>
       
     </item>
