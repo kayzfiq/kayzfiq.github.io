@@ -41,18 +41,7 @@ theme = "hugo-blog-awesome"
 # set markup.highlight.noClasses=false to enable code highlight
 [markup]
   [markup.highlight]
-    anchorLineNos = false
-    codeFences = true
-    guessSyntax = false
-    h1_Lines = ''
-    lineAnchors = ''
-    lineNoStart = 1
-    lineNos = false
-    lineNumbersInTable = true
-    noClasses = false
-    noH1 = true
-    style = "tokyonight-storm"
-    tabWidth = 4
+    noClasses = false    
   [markup.goldmark.renderer]
     unsafe = true
 	[markup.tableOfContents]
@@ -125,7 +114,7 @@ theme = "hugo-blog-awesome"
   # By default (or if nothing is specified), summary is used.
 
 [Languages.en-gb.params.author]
-  avatar = "avatar.jpg" # put the file in assets folder; also ensure that image has same height and width
+  avatar = "avatar2.jpg" # put the file in assets folder; also ensure that image has same height and width
   # Note: image is not rendered if the resource(avatar image) is not found. No error is displayed.
   intro = "Technical Writing about Linux"
   name = "Kayzfiq aka Dojo-Analyst"
