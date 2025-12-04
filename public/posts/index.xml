@@ -6,7 +6,20 @@
     <description>Recent content in posts on My Linux Dojo</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-gb</language>
-    <lastBuildDate>Fri, 21 Nov 2025 17:20:29 +0300</lastBuildDate><atom:link href="http://localhost:1313/posts/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Thu, 04 Dec 2025 08:38:26 +0300</lastBuildDate><atom:link href="http://localhost:1313/posts/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Today I Learned:Configuring Linux Software Repositories</title>
+      <link>http://localhost:1313/posts/configuring_linux_software_repositories/</link>
+      <pubDate>Thu, 04 Dec 2025 08:38:26 +0300</pubDate>
+      
+      <guid>http://localhost:1313/posts/configuring_linux_software_repositories/</guid>
+      
+      <description>&lt;h2 id=&#34;understanding-package-sources-configuration-and-best-practices-for-secure-software-management&#34;&gt;&lt;em&gt;Understanding package sources, configuration, and best practices for secure software management&lt;/em&gt;&lt;/h2&gt;
+&lt;p&gt;When I first started with Linux after years with Windows, one thing confused me: &amp;ldquo;Where dose &lt;code&gt;apt install&lt;/code&gt; actually get software from?&amp;rdquo;&lt;/p&gt;
+&lt;p&gt;In Windows you download an &lt;code&gt;.exe&lt;/code&gt; file from a website. In Linux, you install from repositories - centralized , trusted sources of software. As a system admin, its paramount to understand these repositories and how to configure them. Installing software from untrusted sources is like leaving your front door open.&lt;/p&gt;</description>
+      
+    </item>
+    
     <item>
       <title>Today I Learned: Setting up system updates with systemd timer</title>
       <link>http://localhost:1313/posts/setting_system_updates_with_systemd_timers/</link>

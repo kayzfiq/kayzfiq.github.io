@@ -289,7 +289,7 @@ sudo cat /var/log/system-updates/latest.log
 4. **Customize the schedule:** I started with daily updates at midnight but moved to 3 AM after realizing I sometimes have late-night SSH sessions that would get interrupted.
 5. **Log rotation is crucial:** Without the 30-day cleanup, logs would eventually fill the disk. I tested this by temporarily setting retention to 7 days.
 
-**Troubleshooting Common Issues
+### Troubleshooting Common Issues
 
 **Problem: Timer shows as "dead"**
 ```
@@ -351,7 +351,7 @@ Building this automated update system taught me far more than just "how to sched
 
 These skills directly support my goal of moving from system administration to cybersecurity engineering. Understanding how to secure and maintain infrastructure is fundamental to defending it.
 
-**Resources & Code**
+### Resources & Code
 
 The complete code for this project is available in my GitHub repository:
 [Linux SysAdmin Toolkit - System Updates](https://github.com/kayzfiq/linux-sysadmin-toolkit/tree/main/automation/system-updates)
