@@ -1,7 +1,7 @@
 +++
 date = '2025-12-10T09:04:51+03:00'
 draft = false
-title = 'Today_I_learned_user_management'
+title = 'Today I learned user management'
 +++
 ## How I built a User Management System on Linux
 
@@ -155,7 +155,7 @@ An employee leaves the company. You need to preserve their work:
 
 Before  starting out with solutions like this, first learn the commands manually and understand the files where user information is store on the Linux system.
 
-I've made my script available on [Github]() with comprehensive documentation.
+I've made my script available on [Github](https://github.com/kayzfiq/linux-sysadmin-toolkit/tree/main/automation/user-management) with comprehensive documentation.
 
 ## What's Next?
 
@@ -170,4 +170,4 @@ Some enhancements I'm considering:
 
 Whether you're managing a home lab or preparing for a career in DevOps/SysAdmin, projects like this are invaluable learning experiences. They force you to think about edge cases, security implications, and user experience—all critical skills for any Linux administrator.
 
-*Have questions or suggestions? Drop a comment below or reach out on GitHub. I'd love to hear about your experiences with Linux user management!*
+*Have questions or suggestions? Drop a comment below or reach out on [GitHub](https://github.com/kayzfiq/linux-sysadmin-toolkit/tree/main/automation/user-management). I'd love to hear about your experiences with Linux user management!*
