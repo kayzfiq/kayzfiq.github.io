@@ -6,7 +6,50 @@
     <description>Recent content in posts on My Linux Dojo</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-gb</language>
-    <lastBuildDate>Thu, 04 Dec 2025 08:38:26 +0300</lastBuildDate><atom:link href="http://localhost:1313/posts/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Mon, 15 Dec 2025 09:40:18 +0300</lastBuildDate><atom:link href="http://localhost:1313/posts/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Today I Learned CPU monitoring and troubleshooting</title>
+      <link>http://localhost:1313/posts/cpu_monitoring_and_troubleshooting/</link>
+      <pubDate>Mon, 15 Dec 2025 09:40:18 +0300</pubDate>
+      
+      <guid>http://localhost:1313/posts/cpu_monitoring_and_troubleshooting/</guid>
+      
+      <description>&lt;h2 id=&#34;understanding-cpu-architecture&#34;&gt;Understanding CPU architecture&lt;/h2&gt;
+&lt;p&gt;One of the metrics used when monitoring and troubleshooting a Linux system bottlenecks is CPU usage.
+Before doing the actual monitoring, you need to know what you&amp;rsquo;re working with and that&amp;rsquo;s understanding the CPU architecture for accurate interpretation of the metrics.&lt;/p&gt;
+&lt;p&gt;Run &lt;code&gt;lscpu&lt;/code&gt; to get this information&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;Dojo-Analyst@Dojo:~
+$ lscpu 
+Architecture:                x86_64
+  CPU op-mode(s):            32-bit, 64-bit
+  Address sizes:             40 bits physical, 48 bits virtual
+  Byte Order:                Little Endian
+CPU(s):                      2 						# Total Logical CPU&amp;#39;s
+  On-line CPU(s) list:       0,1
+Vendor ID:                   AuthenticAMD
+  Model name:                AMD A4-1250 APU with Radeon(TM) HD Graphics
+    CPU family:              22
+    Model:                   0
+    Thread(s) per core:      1
+    Core(s) per socket:      2			# 2 physical cores
+    Socket(s):               1				# 1 physical CPU chip
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;Correct interpretation of the above information is crucial to understanding and interpreting load averages.&lt;/p&gt;</description>
+      
+    </item>
+    
+    <item>
+      <title>Today I learned user management</title>
+      <link>http://localhost:1313/posts/today_i_learned_user_management/</link>
+      <pubDate>Wed, 10 Dec 2025 09:04:51 +0300</pubDate>
+      
+      <guid>http://localhost:1313/posts/today_i_learned_user_management/</guid>
+      
+      <description>&lt;h2 id=&#34;how-i-built-a-user-management-system-on-linux&#34;&gt;How I built a User Management System on Linux&lt;/h2&gt;
+&lt;p&gt;When I first started learning Linux system administration, user management seemed straightforward. Create a user with &lt;code&gt;useradd&lt;/code&gt;, set a password with &lt;code&gt;passwd&lt;/code&gt;, and you&amp;rsquo;re done, right? Wrong.  With time and more with real-world scenario&amp;rsquo;s, I discovered that professionally, user management involves so much more; like security policies, audit trails, bulk operations and disaster recovery.&lt;/p&gt;
+&lt;p&gt;Today, I want to share my journey of how I built a comprehensive user management script that handles most of the user operations. Whether you&amp;rsquo;re a beginner or looking to level up your bash scripting skills, this guide will walk you through the essential concepts and practical implementation.&lt;/p&gt;</description>
+      
+    </item>
+    
     <item>
       <title>Today I Learned:Configuring Linux Software Repositories</title>
       <link>http://localhost:1313/posts/configuring_linux_software_repositories/</link>

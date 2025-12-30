@@ -1,0 +1,442 @@
+<!DOCTYPE html>
+<html lang="en-gb"><head><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=livereload" data-no-instant defer></script><meta charset="utf-8">
+<meta http-equiv="content-type" content="text/html">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title itemprop="name">Today I learned user management | My Linux Dojo</title>
+<meta property="og:title" content="Today I learned user management | My Linux Dojo" />
+<meta name="twitter:title" content="Today I learned user management | My Linux Dojo" />
+<meta itemprop="name" content="Today I learned user management | My Linux Dojo" />
+<meta name="application-name" content="Today I learned user management | My Linux Dojo" />
+<meta property="og:site_name" content="Awesome hugo blog" />
+
+<meta name="description" content="Minimal Hugo blog theme with light and dark mode support">
+<meta itemprop="description" content="Minimal Hugo blog theme with light and dark mode support" />
+<meta property="og:description" content="Minimal Hugo blog theme with light and dark mode support" />
+<meta name="twitter:description" content="Minimal Hugo blog theme with light and dark mode support" />
+
+<meta property="og:locale" content="en-gb" />
+<meta name="language" content="en-gb" />
+
+  <link rel="alternate" hreflang="en-gb" href="http://localhost:1313/posts/today_i_learned_user_management/" title="English" />
+
+
+
+
+
+    
+    
+    
+
+    <meta property="og:type" content="article" />
+    <meta property="og:article:published_time" content=2025-12-10T09:04:51&#43;0300 />
+    <meta property="article:published_time" content=2025-12-10T09:04:51&#43;0300 />
+    <meta property="og:url" content="http://localhost:1313/posts/today_i_learned_user_management/" />
+
+    
+    <meta property="og:article:author" content="Kayzfiq aka Dojo-Analyst" />
+    <meta property="article:author" content="Kayzfiq aka Dojo-Analyst" />
+    <meta name="author" content="Kayzfiq aka Dojo-Analyst" />
+    
+    
+
+    
+
+    <script defer type="application/ld+json">
+    {
+        "@context": "http://schema.org",
+        "@type": "Article",
+        "headline": "Today I learned user management",
+        "author": {
+        "@type": "Person",
+        "name": ""
+        },
+        "datePublished": "2025-12-10",
+        "description": "",
+        "wordCount":  825 ,
+        "mainEntityOfPage": "True",
+        "dateModified": "2025-12-10",
+        "image": {
+        "@type": "imageObject",
+        "url": ""
+        },
+        "publisher": {
+        "@type": "Organization",
+        "name": "My Linux Dojo"
+        }
+    }
+    </script>
+
+
+<meta name="generator" content="Hugo 0.152.2">
+
+    
+    <meta property="og:url" content="http://localhost:1313/posts/today_i_learned_user_management/">
+  <meta property="og:site_name" content="My Linux Dojo">
+  <meta property="og:title" content="Today I learned user management">
+  <meta property="og:description" content="How I built a User Management System on Linux When I first started learning Linux system administration, user management seemed straightforward. Create a user with useradd, set a password with passwd, and you’re done, right? Wrong. With time and more with real-world scenario’s, I discovered that professionally, user management involves so much more; like security policies, audit trails, bulk operations and disaster recovery.
+Today, I want to share my journey of how I built a comprehensive user management script that handles most of the user operations. Whether you’re a beginner or looking to level up your bash scripting skills, this guide will walk you through the essential concepts and practical implementation.">
+  <meta property="og:locale" content="en_gb">
+  <meta property="og:type" content="article">
+    <meta property="article:section" content="posts">
+    <meta property="article:published_time" content="2025-12-10T09:04:51+03:00">
+    <meta property="article:modified_time" content="2025-12-10T09:04:51+03:00">
+
+
+    
+    
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="Today I learned user management">
+  <meta name="twitter:description" content="How I built a User Management System on Linux When I first started learning Linux system administration, user management seemed straightforward. Create a user with useradd, set a password with passwd, and you’re done, right? Wrong. With time and more with real-world scenario’s, I discovered that professionally, user management involves so much more; like security policies, audit trails, bulk operations and disaster recovery.
+Today, I want to share my journey of how I built a comprehensive user management script that handles most of the user operations. Whether you’re a beginner or looking to level up your bash scripting skills, this guide will walk you through the essential concepts and practical implementation.">
+
+
+    
+
+    <link rel="canonical" href="http://localhost:1313/posts/today_i_learned_user_management/">
+    <link href="/style.min.2d921c18cf1ec555ffc03d59a8adc211c402c68c930c27d6a0c306ab175a8d09.css" rel="stylesheet">
+    <link href="/code-highlight.min.706d31975fec544a864cb7f0d847a73ea55ca1df91bf495fd12a177138d807cf.css" rel="stylesheet">
+
+    
+    <link rel="apple-touch-icon" sizes="180x180" href="/icons/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="/icons/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="/icons/favicon-16x16.png">
+    <link rel="mask-icon" href="/icons/safari-pinned-tab.svg">
+    <link rel="shortcut icon" href="/favicon.ico">
+
+
+
+
+<link rel="manifest" href="http://localhost:1313/site.webmanifest">
+
+<meta name="msapplication-config" content="/browserconfig.xml">
+<meta name="msapplication-TileColor" content="#2d89ef">
+<meta name="theme-color" content="#434648">
+    <meta name="color-scheme" content="light dark">
+
+    
+    <link rel="icon" type="image/svg+xml" href="/icons/favicon.svg">
+
+    
+    
+</head>
+<body data-theme = "dark" class="notransition">
+
+<script src="/js/theme.js"></script>
+
+<div class="navbar" role="navigation">
+    <nav class="menu" aria-label="Main Navigation">
+        <a href="http://localhost:1313/" class="logo">
+            <svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" 
+viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" 
+stroke-linejoin="round" class="feather feather-home">
+<title>Home</title>
+<path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path>
+<polyline points="9 22 9 12 15 12 15 22"></polyline>
+</svg>
+        </a>
+        <input type="checkbox" id="menu-trigger" class="menu-trigger" />
+        <label for="menu-trigger">
+            <span class="menu-icon">
+                <svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" stroke="currentColor" fill="none" viewBox="0 0 14 14"><title>Menu</title><path stroke-linecap="round" stroke-linejoin="round" d="M10.595 7L3.40726 7"></path><path stroke-linecap="round" stroke-linejoin="round" d="M10.5096 3.51488L3.49301 3.51488"></path><path stroke-linecap="round" stroke-linejoin="round" d="M10.5096 10.4851H3.49301"></path><path stroke-linecap="round" stroke-linejoin="round" d="M0.5 12.5V1.5C0.5 0.947715 0.947715 0.5 1.5 0.5H12.5C13.0523 0.5 13.5 0.947715 13.5 1.5V12.5C13.5 13.0523 13.0523 13.5 12.5 13.5H1.5C0.947715 13.5 0.5 13.0523 0.5 12.5Z"></path></svg>
+            </span>
+        </label>
+
+        <div class="trigger">
+            <ul class="trigger-container">
+                
+                
+                <li>
+                    <a class="menu-link " href="/">
+                        Home
+                    </a>
+                    
+                </li>
+                
+                <li>
+                    <a class="menu-link active" href="/posts/">
+                        Posts
+                    </a>
+                    
+                </li>
+                
+                <li>
+                    <a class="menu-link " href="/projects/">
+                        Projects
+                    </a>
+                    
+                </li>
+                
+                <li>
+                    <a class="menu-link " href="/pages/about/">
+                        About Me
+                    </a>
+                    
+                </li>
+                
+                <li class="menu-separator">
+                    <span>|</span>
+                </li>
+                
+                
+            </ul>
+            <a id="mode" href="#">
+                <svg xmlns="http://www.w3.org/2000/svg" class="mode-sunny" width="21" height="21" viewBox="0 0 14 14" stroke-width="1">
+<title>LIGHT</title><g><circle cx="7" cy="7" r="2.5" fill="none" stroke-linecap="round" stroke-linejoin="round"></circle><line x1="7" y1="0.5" x2="7" y2="2.5" fill="none" stroke-linecap="round" stroke-linejoin="round"></line><line x1="2.4" y1="2.4" x2="3.82" y2="3.82" fill="none" stroke-linecap="round" stroke-linejoin="round"></line><line x1="0.5" y1="7" x2="2.5" y2="7" fill="none" stroke-linecap="round" stroke-linejoin="round"></line><line x1="2.4" y1="11.6" x2="3.82" y2="10.18" fill="none" stroke-linecap="round" stroke-linejoin="round"></line><line x1="7" y1="13.5" x2="7" y2="11.5" fill="none" stroke-linecap="round" stroke-linejoin="round"></line><line x1="11.6" y1="11.6" x2="10.18" y2="10.18" fill="none" stroke-linecap="round" stroke-linejoin="round"></line><line x1="13.5" y1="7" x2="11.5" y2="7" fill="none" stroke-linecap="round" stroke-linejoin="round"></line><line x1="11.6" y1="2.4" x2="10.18" y2="3.82" fill="none" stroke-linecap="round" stroke-linejoin="round"></line></g></svg>
+                <svg xmlns="http://www.w3.org/2000/svg" class="mode-moon" width="21" height="21" viewBox="0 0 14 14" stroke-width="1">
+<title>DARK</title><g><circle cx="7" cy="7" r="2.5" fill="none" stroke-linecap="round" stroke-linejoin="round"></circle><line x1="7" y1="0.5" x2="7" y2="2.5" fill="none" stroke-linecap="round" stroke-linejoin="round"></line><line x1="2.4" y1="2.4" x2="3.82" y2="3.82" fill="none" stroke-linecap="round" stroke-linejoin="round"></line><line x1="0.5" y1="7" x2="2.5" y2="7" fill="none" stroke-linecap="round" stroke-linejoin="round"></line><line x1="2.4" y1="11.6" x2="3.82" y2="10.18" fill="none" stroke-linecap="round" stroke-linejoin="round"></line><line x1="7" y1="13.5" x2="7" y2="11.5" fill="none" stroke-linecap="round" stroke-linejoin="round"></line><line x1="11.6" y1="11.6" x2="10.18" y2="10.18" fill="none" stroke-linecap="round" stroke-linejoin="round"></line><line x1="13.5" y1="7" x2="11.5" y2="7" fill="none" stroke-linecap="round" stroke-linejoin="round"></line><line x1="11.6" y1="2.4" x2="10.18" y2="3.82" fill="none" stroke-linecap="round" stroke-linejoin="round"></line></g></svg>
+            </a>
+        </div>
+    </nav>
+</div>
+
+<div class="wrapper post">
+    <main class="page-content" aria-label="Content">
+        <article>
+            <header class="header">
+                <h1 class="header-title">Today I learned user management</h1>
+                
+                
+                
+                <div class="post-meta">
+                    <time datetime="2025-12-10T09:04:51&#43;03:00" itemprop="datePublished"> 10 Dec 2025 </time>
+                </div>
+                
+            </header>
+            
+    
+    <details class="toc" ZgotmplZ>
+        <summary><b>Table of Contents</b></summary>
+        <nav id="TableOfContents">
+  <ul>
+    <li><a href="#how-i-built-a-user-management-system-on-linux">How I built a User Management System on Linux</a></li>
+    <li><a href="#the-problem-why-default-tools-arent-enough">The problem: Why default tools aren&rsquo;t enough</a></li>
+    <li><a href="#what-i-built">What I built</a></li>
+    <li><a href="#key-concepts-i-learned">Key Concepts I learned</a></li>
+    <li><a href="#real-world-use-cases">Real-World Use Cases</a></li>
+    <li><a href="#whats-next">What&rsquo;s Next?</a></li>
+  </ul>
+</nav>
+    </details>
+            <div class="page-content">
+                <h2 id="how-i-built-a-user-management-system-on-linux">How I built a User Management System on Linux</h2>
+<p>When I first started learning Linux system administration, user management seemed straightforward. Create a user with <code>useradd</code>, set a password with <code>passwd</code>, and you&rsquo;re done, right? Wrong.  With time and more with real-world scenario&rsquo;s, I discovered that professionally, user management involves so much more; like security policies, audit trails, bulk operations and disaster recovery.</p>
+<p>Today, I want to share my journey of how I built a comprehensive user management script that handles most of the user operations. Whether you&rsquo;re a beginner or looking to level up your bash scripting skills, this guide will walk you through the essential concepts and practical implementation.</p>
+<h2 id="the-problem-why-default-tools-arent-enough">The problem: Why default tools aren&rsquo;t enough</h2>
+<p>Linux provides excellent built-in tools like <code>useradd</code>, <code>usermod</code>, and 	<code>userdel</code>. But in ideal production environments, you often need to:</p>
+<ul>
+<li>Create dozens of users from HR spreadsheets</li>
+<li>Enforce consistent password policies across the organization</li>
+<li>Track who did what and when</li>
+<li>Safely remove users without losing critical data</li>
+<li>Quickly lock compromised accounts</li>
+<li>Generate security audit reports for compliance</li>
+</ul>
+<p>Doing all this manually is error-prone and time consuming. That&rsquo;s where automation comes in.</p>
+<h2 id="what-i-built">What I built</h2>
+<p>I created a bash script that serves as a complete user management system with these features:</p>
+<p><strong>Single &amp; Bulk user Creation</strong></p>
+<p>Instead of running <code>useradd</code> repeatedly, the script accepts CSV files with user details. Perfect for onboarding new teams or departments.</p>
+<p><strong>Security First Approach</strong></p>
+<ul>
+<li>Automatic activity logging for audit trail</li>
+<li>Strong password policy enforcement (12+characters, mixed case, numbers and symbols)</li>
+<li>Account Locking/Unlocking without deletion</li>
+<li>Password reset with random generation option</li>
+</ul>
+<p><strong>Safe Deletion</strong></p>
+<p>The scariest part of user management is accidental deletion. My script automatically backs up home directories before removal, storing them in <code>/var/backups/user_homes</code> with timestamps. You&rsquo;ll never lose someone&rsquo;s work again.</p>
+<p><strong>Comprehensive auditing</strong></p>
+<p>One command generates a full security audit report showing;</p>
+<ul>
+<li>Users with login shells</li>
+<li>Root privilege access</li>
+<li>Last login times</li>
+<li>Password expiration status.</li>
+</ul>
+<h2 id="key-concepts-i-learned">Key Concepts I learned</h2>
+<ol>
+<li><strong>User Account States</strong></li>
+</ol>
+<p>Linux User accounts aren&rsquo;t just &ldquo;exists&rdquo; or &ldquo;dosen&rsquo;t exist&rdquo;. They can be:</p>
+<ul>
+<li><strong>Active</strong> - Normal state, can log in</li>
+<li><strong>Locked</strong> - Account exists but login disabled (using <code>passwd -l</code> or <code>usermod -L</code>)</li>
+<li><strong>Expired</strong> - Password expired, forcing reset on the next login</li>
+<li><strong>Deleted</strong> - Completely removed from the system</li>
+</ul>
+<p>Understanding these states is crucial for proper user lifecycle management</p>
+<ol start="2">
+<li><strong>The power of PAM (Pluggable Authentication Modules)</strong></li>
+</ol>
+<p>PAM is how Linux enforces authentication policies. By configuring <code>pam_pwquality</code>, you can enforce password policies system-wide. This was a game changer for me - no more manually checking password strength.</p>
+<pre tabindex="0"><code>Example: Enforce 12-character minimum with complexity requirements
+minlen = 12
+dcredit = -1  # At least 1 digit
+ucredit = -1  # At least 1 uppercase
+lcredit = -1  # At least 1 lowercase
+ocredit = -1  # At least 1 special character
+</code></pre><ol start="3">
+<li><strong>Logging everything</strong></li>
+</ol>
+<p>In production, you need accountability. Every user operation in my script logs to <code>/var/log/user_management.log</code> with timestamps and action performed.</p>
+<pre tabindex="0"><code>2024-12-10 14:30:45 | root | CREATED user john
+2024-12-10 14:35:12 | root | ENFORCED strong password policy
+</code></pre><ol start="4">
+<li><strong>Bash scripting best practices</strong></li>
+</ol>
+<p>Building this project taught me several important bash techniques;</p>
+<p><strong>Error Checking</strong></p>
+<pre tabindex="0"><code>if ! id &#34;$username&#34; &amp;&gt;/dev/null; then
+    echo &#34;User does not exist!&#34;
+    return 1
+fi
+</code></pre><p><strong>Safe File Operations</strong></p>
+<pre tabindex="0"><code># Always check before destructive operations
+if [[ -d &#34;$homedir&#34; &amp;&amp; &#34;$homedir&#34; != &#34;/&#34; ]]; then
+    # Backup logic here
+fi
+</code></pre><p><strong>Color-Coded Output</strong></p>
+<pre tabindex="0"><code>RED=&#39;\033[0;31m&#39;
+GREEN=&#39;\033[0;32m&#39;
+echo -e &#34;${GREEN}Success!${NC}&#34;
+</code></pre><h2 id="real-world-use-cases">Real-World Use Cases</h2>
+<p><strong>Scenario 1: Onboarding a New Team</strong></p>
+<p>HR sends you a spreadsheet with 20 new developers. Instead of spending an hour creating accounts manually:</p>
+<ol>
+<li>
+<p><strong>Export to CSV format:</strong> <code>username,password,fullname,groups</code></p>
+</li>
+<li>
+<p>Place at <code>/tmp/bulk_users.csv</code></p>
+</li>
+<li>
+<p>Run the script, select &ldquo;Bulk create users&rdquo;</p>
+</li>
+<li>
+<p>All 20 accounts created in seconds with consistent settings</p>
+</li>
+</ol>
+<p><strong>Scenario 2: Security Incident</strong></p>
+<p>A user account is compromised. You need to act fast:</p>
+<ol>
+<li>
+<p>Run the script</p>
+</li>
+<li>
+<p>Select &ldquo;Lock User Account&rdquo;</p>
+</li>
+<li>
+<p>Enter the username</p>
+</li>
+<li>
+<p>Account immediately disabled, no data lost</p>
+</li>
+<li>
+<p>Action logged for the security team</p>
+</li>
+</ol>
+<p><strong>Scenario 3: Offboarding</strong></p>
+<p>An employee leaves the company. You need to preserve their work:</p>
+<ol>
+<li>
+<p>Run the script</p>
+</li>
+<li>
+<p>Select &ldquo;Delete a User&rdquo;</p>
+</li>
+<li>
+<p>Confirm the username</p>
+</li>
+<li>
+<p>Home directory automatically backed up to <code>/var/backups/user_homes/</code></p>
+</li>
+<li>
+<p>Account safely removed</p>
+</li>
+</ol>
+<p>Before  starting out with solutions like this, first learn the commands manually and understand the files where user information is store on the Linux system.</p>
+<p>I&rsquo;ve made my script available on <a href="https://github.com/kayzfiq/linux-sysadmin-toolkit/tree/main/automation/user-management">Github</a> with comprehensive documentation.</p>
+<h2 id="whats-next">What&rsquo;s Next?</h2>
+<p>This project taught me that system administration isn&rsquo;t just about knowing commands—it&rsquo;s about building reliable, secure, and maintainable solutions.
+Some enhancements I&rsquo;m considering:</p>
+<ul>
+<li>Email notifications when users are created</li>
+<li>Integration with LDAP/Active Directory</li>
+<li>Automatic password expiration reminders</li>
+<li>User disk quota management</li>
+<li>Scheduled audit reports</li>
+</ul>
+<p>Whether you&rsquo;re managing a home lab or preparing for a career in DevOps/SysAdmin, projects like this are invaluable learning experiences. They force you to think about edge cases, security implications, and user experience—all critical skills for any Linux administrator.</p>
+<p><em>Have questions or suggestions? Drop a comment below or reach out on <a href="https://github.com/kayzfiq/linux-sysadmin-toolkit/tree/main/automation/user-management">GitHub</a>. I&rsquo;d love to hear about your experiences with Linux user management!</em></p>
+
+            </div>
+        </article></main>
+</div>
+<footer class="footer">
+    <span class="footer_item"> </span>
+    &nbsp;
+
+    <div class="footer_social-icons">
+<a href="https://github.com/kayzfiq" target="_blank" rel="noopener noreferrer me"
+    title="Github">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+    stroke-linecap="round" stroke-linejoin="round">
+    <path
+        d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22">
+    </path>
+</svg>
+</a>
+<a href="https://x.com/kayz_fiq" target="_blank" rel="noopener noreferrer me"
+    title="X">
+    <svg viewBox="0 0 1200 1227" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+    <path
+        d="M714.163 519.284L1160.89 0H1055.03L667.137 450.887L357.328 0H0L468.492 681.821L0 1226.37H105.866L515.491 750.218L842.672 1226.37H1200L714.137 519.284H714.163ZM569.165 687.828L521.697 619.934L144.011 79.6944H306.615L611.412 515.685L658.88 583.579L1055.08 1150.3H892.476L569.165 687.854V687.828Z"/>
+</svg>
+</a>
+<a href="/index.xml" target="_blank" rel="noopener noreferrer me"
+    title="Rss">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+    stroke-linecap="round" stroke-linejoin="round">
+    <path d="M4 11a9 9 0 0 1 9 9" />
+    <path d="M4 4a16 16 0 0 1 16 16" />
+    <circle cx="5" cy="19" r="1" />
+</svg>
+</a>
+</div>
+    <small class="footer_copyright">
+        © 2025 Kayzfiq aka Dojo-Analyst.
+        Powered by <a href="https://github.com/hugo-sid/hugo-blog-awesome" target="_blank" rel="noopener">Hugo blog awesome</a>.
+    </small>
+</footer><a href="#" title="Go to top" id="totop">
+    <svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" fill="currentColor" stroke="currentColor" viewBox="0 96 960 960">
+    <path d="M283 704.739 234.261 656 480 410.261 725.739 656 677 704.739l-197-197-197 197Z"/>
+</svg>
+
+</a>
+
+
+    
+
+
+
+
+    
+    
+        
+    
+
+    
+    
+        
+    
+
+
+
+    
+    <script async src="http://localhost:1313/js/main.js" ></script>
+
+    
+
+</body>
+</html>
