@@ -32,15 +32,12 @@ The golden rule: Focus on **available** not free.
 
 ### Memory Health Assessments
 
-**Available**% 			**Status**			**Action**					**Risk**
-
-> 20%									Healthy						Normal Operation 			None
-
-10-20% 								Monitor						Watch trends					Low
-
-5-10%									Warning						Identify Memory hogs		Medium
-
-< 5% 									Critical						Immediate action				High
+| Available % 	| status   	| Action               	| Risk   	|
+|-------------	|----------	|----------------------	|--------	|
+| >20%        	| Healthy  	| Normal operation     	| None   	|
+| 10-20%      	| Monitor  	| Watch trends         	| Low    	|
+| 5-10%       	| Warning  	| Identify memory hogs 	| Medium 	|
+| <5%         	| Critical 	| Immediate Action     	| High   	|
 
 **Watch Memory in Real-Time**
 
@@ -104,4 +101,7 @@ Or use
 `pidstat -r -p <PID> 5`
 The -r flag shows memory statistics. If RSS consistently grows without corresponding workload increase, suspect a leak.
 
-Memory monitoring is about understanding that low "free" memory is normal and healthy in Linux. The real indicators are available memory, swap activity, and whether processes can get memory they need. 
+**Key Takeaway:** In Linux, low "free" memory is good. Watch "available" memory and swap activity (si/so) instead. These are your real indicators of memory health.
+
+*What memory issues did you encounter in production? How did you diagnose them? Share your experiences!*
+
