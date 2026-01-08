@@ -3,11 +3,11 @@
 <meta http-equiv="content-type" content="text/html">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title itemprop="name">Today I Learned CPU monitoring and troubleshooting | My Linux Dojo</title>
-<meta property="og:title" content="Today I Learned CPU monitoring and troubleshooting | My Linux Dojo" />
-<meta name="twitter:title" content="Today I Learned CPU monitoring and troubleshooting | My Linux Dojo" />
-<meta itemprop="name" content="Today I Learned CPU monitoring and troubleshooting | My Linux Dojo" />
-<meta name="application-name" content="Today I Learned CPU monitoring and troubleshooting | My Linux Dojo" />
+<title itemprop="name">Today I Learned Memory_monitoring_and_troubleshooting | My Linux Dojo</title>
+<meta property="og:title" content="Today I Learned Memory_monitoring_and_troubleshooting | My Linux Dojo" />
+<meta name="twitter:title" content="Today I Learned Memory_monitoring_and_troubleshooting | My Linux Dojo" />
+<meta itemprop="name" content="Today I Learned Memory_monitoring_and_troubleshooting | My Linux Dojo" />
+<meta name="application-name" content="Today I Learned Memory_monitoring_and_troubleshooting | My Linux Dojo" />
 <meta property="og:site_name" content="Awesome hugo blog" />
 
 <meta name="description" content="Minimal Hugo blog theme with light and dark mode support">
@@ -18,7 +18,7 @@
 <meta property="og:locale" content="en-gb" />
 <meta name="language" content="en-gb" />
 
-  <link rel="alternate" hreflang="en-gb" href="http://localhost:1313/posts/cpu_monitoring_and_troubleshooting/" title="English" />
+  <link rel="alternate" hreflang="en-gb" href="http://localhost:1313/posts/memory_monitoring_and_troubleshooting/" title="English" />
 
 
 
@@ -29,9 +29,9 @@
     
 
     <meta property="og:type" content="article" />
-    <meta property="og:article:published_time" content=2025-12-15T09:40:18&#43;0300 />
-    <meta property="article:published_time" content=2025-12-15T09:40:18&#43;0300 />
-    <meta property="og:url" content="http://localhost:1313/posts/cpu_monitoring_and_troubleshooting/" />
+    <meta property="og:article:published_time" content=2026-01-08T08:46:13&#43;0300 />
+    <meta property="article:published_time" content=2026-01-08T08:46:13&#43;0300 />
+    <meta property="og:url" content="http://localhost:1313/posts/memory_monitoring_and_troubleshooting/" />
 
     
     <meta property="og:article:author" content="Kayzfiq aka Dojo-Analyst" />
@@ -46,16 +46,16 @@
     {
         "@context": "http://schema.org",
         "@type": "Article",
-        "headline": "Today I Learned CPU monitoring and troubleshooting",
+        "headline": "Today I Learned Memory_monitoring_and_troubleshooting",
         "author": {
         "@type": "Person",
         "name": ""
         },
-        "datePublished": "2025-12-15",
+        "datePublished": "2026-01-08",
         "description": "",
-        "wordCount":  713 ,
+        "wordCount":  545 ,
         "mainEntityOfPage": "True",
-        "dateModified": "2025-12-15",
+        "dateModified": "2026-01-08",
         "image": {
         "@type": "imageObject",
         "url": ""
@@ -71,31 +71,31 @@
 <meta name="generator" content="Hugo 0.152.2">
 
     
-    <meta property="og:url" content="http://localhost:1313/posts/cpu_monitoring_and_troubleshooting/">
+    <meta property="og:url" content="http://localhost:1313/posts/memory_monitoring_and_troubleshooting/">
   <meta property="og:site_name" content="My Linux Dojo">
-  <meta property="og:title" content="Today I Learned CPU monitoring and troubleshooting">
-  <meta property="og:description" content="Understanding CPU architecture One of the metrics used when monitoring and troubleshooting a Linux system bottlenecks is CPU usage. Before doing the actual monitoring, you need to know what you’re working with and that’s understanding the CPU architecture for accurate interpretation of the metrics.
-Run lscpu to get this information
-Dojo-Analyst@Dojo:~ $ lscpu Architecture: x86_64 CPU op-mode(s): 32-bit, 64-bit Address sizes: 40 bits physical, 48 bits virtual Byte Order: Little Endian CPU(s): 2 # Total Logical CPU&#39;s On-line CPU(s) list: 0,1 Vendor ID: AuthenticAMD Model name: AMD A4-1250 APU with Radeon(TM) HD Graphics CPU family: 22 Model: 0 Thread(s) per core: 1 Core(s) per socket: 2	# 2 physical cores Socket(s): 1	# 1 physical CPU chip Correct interpretation of the above information is crucial to understanding and interpreting load averages.">
+  <meta property="og:title" content="Today I Learned Memory_monitoring_and_troubleshooting">
+  <meta property="og:description" content="Understanding Linux Memory management Philosophy Linux follows this principle: “Free memory is wasted memory.”
+The kernel aggressively used unused RAM for caching disk data. This dramatically improves performance, but it confuses people who see “low free memory” and panic. The key is understanding what memory is truly available, not free.
+Memory Analysis: free command - your starting point $ free -h total used free shared buff/cache available Mem: 3.3Gi 1.9Gi 119Mi 65Mi 1.6Gi 1.4Gi Swap: 3.9Gi 524Ki 3.9Gi Important column explained:">
   <meta property="og:locale" content="en_gb">
   <meta property="og:type" content="article">
     <meta property="article:section" content="posts">
-    <meta property="article:published_time" content="2025-12-15T09:40:18+03:00">
-    <meta property="article:modified_time" content="2025-12-15T09:40:18+03:00">
+    <meta property="article:published_time" content="2026-01-08T08:46:13+03:00">
+    <meta property="article:modified_time" content="2026-01-08T08:46:13+03:00">
 
 
     
     
   <meta name="twitter:card" content="summary">
-  <meta name="twitter:title" content="Today I Learned CPU monitoring and troubleshooting">
-  <meta name="twitter:description" content="Understanding CPU architecture One of the metrics used when monitoring and troubleshooting a Linux system bottlenecks is CPU usage. Before doing the actual monitoring, you need to know what you’re working with and that’s understanding the CPU architecture for accurate interpretation of the metrics.
-Run lscpu to get this information
-Dojo-Analyst@Dojo:~ $ lscpu Architecture: x86_64 CPU op-mode(s): 32-bit, 64-bit Address sizes: 40 bits physical, 48 bits virtual Byte Order: Little Endian CPU(s): 2 # Total Logical CPU&#39;s On-line CPU(s) list: 0,1 Vendor ID: AuthenticAMD Model name: AMD A4-1250 APU with Radeon(TM) HD Graphics CPU family: 22 Model: 0 Thread(s) per core: 1 Core(s) per socket: 2	# 2 physical cores Socket(s): 1	# 1 physical CPU chip Correct interpretation of the above information is crucial to understanding and interpreting load averages.">
+  <meta name="twitter:title" content="Today I Learned Memory_monitoring_and_troubleshooting">
+  <meta name="twitter:description" content="Understanding Linux Memory management Philosophy Linux follows this principle: “Free memory is wasted memory.”
+The kernel aggressively used unused RAM for caching disk data. This dramatically improves performance, but it confuses people who see “low free memory” and panic. The key is understanding what memory is truly available, not free.
+Memory Analysis: free command - your starting point $ free -h total used free shared buff/cache available Mem: 3.3Gi 1.9Gi 119Mi 65Mi 1.6Gi 1.4Gi Swap: 3.9Gi 524Ki 3.9Gi Important column explained:">
 
 
     
 
-    <link rel="canonical" href="http://localhost:1313/posts/cpu_monitoring_and_troubleshooting/">
+    <link rel="canonical" href="http://localhost:1313/posts/memory_monitoring_and_troubleshooting/">
     <link href="/style.min.2d921c18cf1ec555ffc03d59a8adc211c402c68c930c27d6a0c306ab175a8d09.css" rel="stylesheet">
     <link href="/code-highlight.min.706d31975fec544a864cb7f0d847a73ea55ca1df91bf495fd12a177138d807cf.css" rel="stylesheet">
 
@@ -196,12 +196,12 @@ stroke-linejoin="round" class="feather feather-home">
     <main class="page-content" aria-label="Content">
         <article>
             <header class="header">
-                <h1 class="header-title">Today I Learned CPU monitoring and troubleshooting</h1>
+                <h1 class="header-title">Today I Learned Memory_monitoring_and_troubleshooting</h1>
                 
                 
                 
                 <div class="post-meta">
-                    <time datetime="2025-12-15T09:40:18&#43;03:00" itemprop="datePublished"> 15 Dec 2025 </time>
+                    <time datetime="2026-01-08T08:46:13&#43;03:00" itemprop="datePublished"> 8 Jan 2026 </time>
                 </div>
                 
             </header>
@@ -211,108 +211,93 @@ stroke-linejoin="round" class="feather feather-home">
         <summary><b>Table of Contents</b></summary>
         <nav id="TableOfContents">
   <ul>
-    <li><a href="#understanding-cpu-architecture">Understanding CPU architecture</a></li>
-    <li><a href="#load-average-the-big-picture">Load Average: The Big Picture</a></li>
-    <li><a href="#load-average-metric-interpretation">Load average metric interpretation</a></li>
-    <li><a href="#real-time-monitoring-with-top">Real-Time Monitoring with <code>top</code></a></li>
-    <li><a href="#detailed-per-process-analysis">Detailed Per-Process Analysis</a></li>
-    <li><a href="#how-to-troubleshoot-cpu-issues">How to troubleshoot CPU issues</a></li>
+    <li>
+      <ul>
+        <li><a href="#understanding-linux-memory-management-philosophy">Understanding Linux Memory management Philosophy</a></li>
+        <li><a href="#memory-analysis-free-command---your-starting-point">Memory Analysis: <code>free</code> command - your starting point</a></li>
+        <li><a href="#memory-health-assessments">Memory Health Assessments</a></li>
+        <li><a href="#identifying-memory-hungry-processes">Identifying memory hungry processes</a></li>
+        <li><a href="#real-world-troubleshooting-flow">Real-World Troubleshooting Flow</a></li>
+      </ul>
+    </li>
   </ul>
 </nav>
     </details>
             <div class="page-content">
-                <h2 id="understanding-cpu-architecture">Understanding CPU architecture</h2>
-<p>One of the metrics used when monitoring and troubleshooting a Linux system bottlenecks is CPU usage.
-Before doing the actual monitoring, you need to know what you&rsquo;re working with and that&rsquo;s understanding the CPU architecture for accurate interpretation of the metrics.</p>
-<p>Run <code>lscpu</code> to get this information</p>
-<pre tabindex="0"><code>Dojo-Analyst@Dojo:~
-$ lscpu 
-Architecture:                x86_64
-  CPU op-mode(s):            32-bit, 64-bit
-  Address sizes:             40 bits physical, 48 bits virtual
-  Byte Order:                Little Endian
-CPU(s):                      2 						# Total Logical CPU&#39;s
-  On-line CPU(s) list:       0,1
-Vendor ID:                   AuthenticAMD
-  Model name:                AMD A4-1250 APU with Radeon(TM) HD Graphics
-    CPU family:              22
-    Model:                   0
-    Thread(s) per core:      1
-    Core(s) per socket:      2			# 2 physical cores
-    Socket(s):               1				# 1 physical CPU chip
-</code></pre><p>Correct interpretation of the above information is crucial to understanding and interpreting load averages.</p>
-<h2 id="load-average-the-big-picture">Load Average: The Big Picture</h2>
-<p>When you run commands like <code>uptime</code> or 	<code>top</code>, you will see load average numbers: which represent the average number of processes that are either running, runnable 	(waiting for CPU time) or in uninterruptible sleep (waiting for I/O).</p>
-<pre tabindex="0"><code>$ uptime 
- 10:00:16 up  1:08,  1 user,  load average: 0.70, 0.48, 0.37
-</code></pre><p>The load average numbers, represent three numbers 1-minute, 5-minute and 15-minutes averages respectively.</p>
-<h2 id="load-average-metric-interpretation">Load average metric interpretation</h2>
-<p>Here is how to interpret them;</p>
-<pre tabindex="0"><code>Load &lt; Cores				Underutilized 						Normal, Capacity available
-Load == Cores 				Fully utilized							Monitor trends
-Load = 1.5 x Cores    	Moderate queuing				Investigate within minutes
-Load = 2 x Cores			Heavy queuing					Immediate investigation
-Load &gt; 3 x Cores 			Severe saturation 				Emergency response
-</code></pre><p><strong>Rule of thumb</strong>: Sustained load average above 70% of your core count deserves investigation. Above 100% means you have performance degradation.</p>
-<h2 id="real-time-monitoring-with-top">Real-Time Monitoring with <code>top</code></h2>
-<p>Run <code>top</code> command and let&rsquo;s decode what you see;</p>
-<pre tabindex="0"><code>top - 16:46:35 up  7:54,  1 user,  load average: 0.09, 0.09, 0.07
-Tasks: 213 total,   1 running, 209 sleeping,   3 stopped,   0 zombie
-%Cpu(s): 28.6 us, 28.6 sy,  0.0 ni, 28.6 id,  0.0 wa,  0.0 hi, 14.3 si,  0.0 st 
-</code></pre><ul>
-<li><strong>us(user)</strong>: Time spent running user-space processes. High value indicate application workload.</li>
-<li><strong>sy(system)</strong>: Time spent in kernel space. High values (&gt;20%) suggest excessive system calls, context switching or kernel bottlenecks.</li>
-<li><strong>ni(nice)</strong>: Time running low priority processes. Usually negligible.</li>
-<li><strong>id(idle</strong>): Unoccupied CPU time. Lower is busier.</li>
-<li><strong>wa(I/O wait)</strong>: CPU waiting for I/O operations. <strong>Critical metric</strong>! High wa (&gt;10%) means disk or network is your bottleneck, not CPU.</li>
-<li><strong>hi(hardware interrupts)</strong>: Time servicing hardware interrupts. High values may indicate network card or disk controller issues.</li>
-<li><strong>si(software interrupts)</strong>: Time handling software interrupts. High with network heavy workloads.</li>
-<li><strong>st(steal time)</strong>: Only relevant in VM&rsquo;s. Time stolen by hypervisor for others VM&rsquo;s.</li>
-</ul>
-<p><strong>Interactive monitoring with <code>top</code> command</strong></p>
+                <h3 id="understanding-linux-memory-management-philosophy">Understanding Linux Memory management Philosophy</h3>
+<p>Linux follows this principle: &ldquo;Free memory is wasted memory.&rdquo;</p>
+<p>The kernel aggressively used unused RAM for caching disk data. This dramatically improves performance, but it confuses people who see &ldquo;low free memory&rdquo; and panic. The key is understanding what memory is truly available, not free.</p>
+<h3 id="memory-analysis-free-command---your-starting-point">Memory Analysis: <code>free</code> command - your starting point</h3>
+<pre tabindex="0"><code>$ free -h
+               total        used        free      shared  buff/cache   available
+Mem:           3.3Gi       1.9Gi       119Mi        65Mi       1.6Gi       1.4Gi
+Swap:          3.9Gi       524Ki       3.9Gi
+</code></pre><p>Important column explained:</p>
 <ul>
-<li>Press <code>1</code> to see per-core breakdown (crucial for spotting single-threaded bottlenecks)</li>
-<li>Press <code>c</code> to show full command lines</li>
-<li>Press <code>P</code> to sort by CPU usage</li>
-<li>Press <code>M</code> to sort by memory</li>
-<li>Press <code>k</code> to kill a process</li>
+<li><strong>total</strong>: Physical RAM installed</li>
+<li><strong>used</strong>: Memory used by applications and kernel (excluding cache)</li>
+<li><strong>free</strong>: Completely unused memory (usually small - this is OK!)</li>
+<li><strong>shared</strong>: Memory used by tmpfs/shared memory segments</li>
+<li><strong>buff/cache</strong>: Memory used for disk caching and buffers (RECLAIMABLE)</li>
+<li><strong>available</strong>:Memory available for starting new applications WITHOUT swapping (most important column)</li>
+<li><strong>swap used</strong>: Memory paged to disk</li>
 </ul>
-<h2 id="detailed-per-process-analysis">Detailed Per-Process Analysis</h2>
-<p><strong>Find CPU hogs:</strong></p>
-<p><code>ps aux --sort=-%cpu | head -10</code></p>
-<p>This will show the top 10 CPU consumers with their PID, user, and command.</p>
-<p><code>top -o %CPU</code></p>
-<p>The key columns to look out for in the above are:</p>
+<p>The golden rule: Focus on <strong>available</strong> not free.</p>
+<h3 id="memory-health-assessments">Memory Health Assessments</h3>
+<p><strong>Available</strong> % 			<strong>Status</strong>			<strong>Action</strong>					<strong>Risk</strong></p>
+<blockquote>
+<p>20%									Healthy						Normal Operation 			None
+10-20% 								Monitor						Watch trends					Low
+5-10%									Warning						Identify Memory hogs		Medium
+&lt; 5% 									Critical						Immediate action				High</p>
+</blockquote>
+<p><strong>Watch Memory in Real-Time</strong></p>
+<p><code>watch -n 1 free -h</code></p>
+<p>This updates every second, letting you see memory consumption patterns during operations.</p>
+<p><strong>Monitoring Swap activity (critical):</strong></p>
+<p>Run <code>vmstat 1</code></p>
+<p>Look at these columns:</p>
 <ul>
-<li>%CPU: Can exceed 100%</li>
-<li>Time+: Total CPU time consumed</li>
-<li>S (state): S=sleeping, R=running, Z=Zombie, D=uninterruptible (I/O wait)</li>
-<li>RES: Actual physical RAM used</li>
+<li><strong>si(swap in:</strong> Pages swapped in from disk per second</li>
+<li><strong>so(swap out:</strong> Pages swapped out to disk per second)</li>
 </ul>
-<p><strong>Detailed Per-Core CPU utilization</strong></p>
-<p><code>mpstat -P ALL 1</code></p>
-<p>This shows CPU usage broken down by each logical CPU, updating every second. Look for:</p>
+<p><strong>Non-zero si/so values consistently = performance problems</strong>! Your system is thrashing.</p>
+<p>A small amount of swap usage is normal, but active swapping is bad.</p>
+<h3 id="identifying-memory-hungry-processes">Identifying memory hungry processes</h3>
+<p>Run <code>ps aux -o --sort=-pid,user,%mem,rss,vsz,cmd</code></p>
+<pre tabindex="0"><code>$ ps aux --sort=-pid,user,%mem,rss,vsz,cmd
+USER         PID %CPU %MEM    VSZ   RSS TTY      STAT START   TIME COMMAND
+Dojo-An+    8234  350  0.1  80548  4908 pts/0    R+   09:37   0:00 ps aux --sort=-pid,user,%m
+root        8186  0.0  0.0      0     0 ?        I&lt;   09:36   0:00 [kworker/1:1H-kblockd]
+root        8163  0.0  0.0      0     0 ?        I&lt;   09:35   0:00 [kworker/0:0H-kblockd]
+root        8090  0.1  0.0      0     0 ?        I    09:32   0:00 [kworker/u8:2-flush-8:0]
+root        8057  0.2  0.0      0     0 ?        I    09:31   0:01 [kworker/1:1-events]
+</code></pre><p><strong>Key metrics</strong></p>
 <ul>
-<li>One core at 100% while others idle - means single-threaded bottleneck</li>
-<li>All cores evenly loaded - means well-parallelized workload</li>
-<li>Uneven distribution = possible CPU affinity issues or poor threading.</li>
+<li><strong>RSS(Resident Set Size):</strong> Actual physical RAM used by the process (Most important)</li>
+<li>**VSZ(Virtual Size):**Virtual memory allocated (includes swap and shared libraries)</li>
+<li>**%MEM:**Percentage of total RAM</li>
 </ul>
-<h2 id="how-to-troubleshoot-cpu-issues">How to troubleshoot CPU issues</h2>
-<p>When someone reports the &ldquo;system is slow&rdquo;:</p>
+<p><strong>Important:</strong> RSS can be misleading for processes sharing libraries. Multiple processes might share the same library in memory, but RSS counts it for each.</p>
+<h3 id="real-world-troubleshooting-flow">Real-World Troubleshooting Flow</h3>
+<p>When investigating memory issues:</p>
 <ol>
-<li>Check load averages with <code>uptime</code> - is it above core count?</li>
-<li>Run <code>top</code> and press <code>1</code> - which cores are busy?</li>
-<li>Check <code>%wa</code>, if high, it&rsquo;s I/O, not CPU issue</li>
-<li>Identify the culprit with <code>ps aux --sort=-%cpu | head</code></li>
-<li>Investigate that process: What is it doing? Is it expected? Can it be optimized or scheduled differently?</li>
+<li><strong>Check available memory:</strong> Run <code>free -h</code> - focus on &ldquo;available&rdquo; column. Is available &lt;10%?</li>
+<li><strong>Check swap activity:</strong> Run <code>vmstat 1</code> watch si/so columns. Is si/so &gt; 0?</li>
+<li><strong>Identify memory hogs:</strong> Run <code>ps aux -o --sort=-pid,user,%mem,rss,vsz,cmd</code></li>
+<li><strong>Check for OOM killers:</strong> When Linux runs completely out of memory, the OOM killer terminates processes. Check id this happened:
+Run:
+<code>dmesg | grep -i &quot;out of memory&quot;</code>
+<code>dmesg | grep -i &quot;kill</code>
+<code>journalctl -k | grep -i &quot;oom&quot;</code></li>
+<li><strong>Check for leaks:</strong> Memory leaks show as gradual, steady increase in a process&rsquo;s memory usage over time.</li>
 </ol>
-<p><strong>Performance Tuning Tips</strong></p>
-<ul>
-<li><strong>CPU affinity:</strong> Pin critical processes to specific cores with <code>taskset</code> to improve cache locality.</li>
-<li><strong>Nice values:</strong> Lower priority of background tasks with nice or renice.</li>
-<li><strong>Process limits:</strong> Check if processes hit CPU time limits with <code>ulimit -a</code></li>
-</ul>
-<p>The key is knowing when high CPU is actually the problem versus a symptom of something else usually I/O wait.</p>
+<p><strong>Watch specific process</strong>
+<code>watch -n 5 &quot;ps aux | grep &lt;process_name&quot;</code></p>
+<p>Or use
+<code>pidstat -r -p &lt;PID&gt; 5</code>
+The -r flag shows memory statistics. If RSS consistently grows without corresponding workload increase, suspect a leak.</p>
+<p>Memory monitoring is about understanding that low &ldquo;free&rdquo; memory is normal and healthy in Linux. The real indicators are available memory, swap activity, and whether processes can get memory they need.</p>
 
             </div>
         </article></main>

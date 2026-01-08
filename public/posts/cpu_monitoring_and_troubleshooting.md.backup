@@ -72,3 +72,56 @@ Tasks: 213 total,   1 running, 209 sleeping,   3 stopped,   0 zombie
 * **si(software interrupts)**: Time handling software interrupts. High with network heavy workloads.
 * **st(steal time)**: Only relevant in VM's. Time stolen by hypervisor for others VM's.
 
+**Interactive monitoring with `top` command**
+
+* Press `1` to see per-core breakdown (crucial for spotting single-threaded bottlenecks)
+* Press `c` to show full command lines
+* Press `P` to sort by CPU usage
+* Press `M` to sort by memory
+* Press `k` to kill a process
+
+## Detailed Per-Process Analysis
+
+**Find CPU hogs:**
+
+`ps aux --sort=-%cpu | head -10`
+
+This will show the top 10 CPU consumers with their PID, user, and command.
+
+`top -o %CPU`
+
+The key columns to look out for in the above are:
+
+* %CPU: Can exceed 100%
+* Time+: Total CPU time consumed 
+* S (state): S=sleeping, R=running, Z=Zombie, D=uninterruptible (I/O wait)
+* RES: Actual physical RAM used
+
+**Detailed Per-Core CPU utilization**
+
+`mpstat -P ALL 1`
+
+This shows CPU usage broken down by each logical CPU, updating every second. Look for:
+
+* One core at 100% while others idle - means single-threaded bottleneck
+* All cores evenly loaded - means well-parallelized workload
+* Uneven distribution = possible CPU affinity issues or poor threading.
+
+## How to troubleshoot CPU issues
+
+When someone reports the "system is slow":
+
+1. Check load averages with `uptime` - is it above core count?
+2. Run `top` and press `1` - which cores are busy?
+3. Check `%wa`, if high, it's I/O, not CPU issue
+4. Identify the culprit with `ps aux --sort=-%cpu | head`
+5. Investigate that process: What is it doing? Is it expected? Can it be optimized or scheduled differently?
+
+**Performance Tuning Tips**
+
+* **CPU affinity:** Pin critical processes to specific cores with `taskset` to improve cache locality.
+* **Nice values:** Lower priority of background tasks with nice or renice.
+* **Process limits:** Check if processes hit CPU time limits with `ulimit -a`
+
+The key is knowing when high CPU is actually the problem versus a symptom of something else usually I/O wait.
+

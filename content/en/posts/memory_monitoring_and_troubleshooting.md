@@ -1,0 +1,107 @@
++++
+date = '2026-01-08T08:46:13+03:00'
+draft = false
+title = 'Today I Learned Memory monitoring and troubleshooting'
++++
+### Understanding Linux Memory management Philosophy
+
+Linux follows this principle: "Free memory is wasted memory."
+
+The kernel aggressively uses unused RAM for caching disk data. This dramatically improves performance, but it confuses people who see "low free memory" and panic. The key is understanding what memory is truly available, not free.
+
+### Memory Analysis: `free` command - your starting point
+
+```
+$ free -h
+               total        used        free      shared  buff/cache   available
+Mem:           3.3Gi       1.9Gi       119Mi        65Mi       1.6Gi       1.4Gi
+Swap:          3.9Gi       524Ki       3.9Gi
+```
+
+Important column explained:
+
+* **total**: Physical RAM installed
+* **used**: Memory used by applications and kernel (excluding cache)
+* **free**: Completely unused memory (usually small - this is OK!)
+* **shared**: Memory used by tmpfs/shared memory segments
+* **buff/cache**: Memory used for disk caching and buffers (RECLAIMABLE)
+* **available**:Memory available for starting new applications WITHOUT swapping (most important column)
+* **swap used**: Memory paged to disk
+
+The golden rule: Focus on **available** not free. 
+
+### Memory Health Assessments
+
+**Available**% 			**Status**			**Action**					**Risk**
+
+> 20%									Healthy						Normal Operation 			None
+
+10-20% 								Monitor						Watch trends					Low
+
+5-10%									Warning						Identify Memory hogs		Medium
+
+< 5% 									Critical						Immediate action				High
+
+**Watch Memory in Real-Time**
+
+`watch -n 1 free -h`
+
+This updates every second, letting you see memory consumption patterns during operations.
+
+**Monitoring Swap activity (critical):**
+
+Run `vmstat 1`
+
+Look at these columns:
+
+* **si(swap in:** Pages swapped in from disk per second
+* **so(swap out:** Pages swapped out to disk per second)
+
+**Non-zero si/so values consistently = performance problems**! Your system is thrashing.
+
+A small amount of swap usage is normal, but active swapping is bad.
+
+### Identifying memory hungry processes
+
+Run `ps aux -o --sort=-pid,user,%mem,rss,vsz,cmd`
+
+```
+$ ps aux --sort=-pid,user,%mem,rss,vsz,cmd
+USER         PID %CPU %MEM    VSZ   RSS TTY      STAT START   TIME COMMAND
+Dojo-An+    8234  350  0.1  80548  4908 pts/0    R+   09:37   0:00 ps aux --sort=-pid,user,%m
+root        8186  0.0  0.0      0     0 ?        I<   09:36   0:00 [kworker/1:1H-kblockd]
+root        8163  0.0  0.0      0     0 ?        I<   09:35   0:00 [kworker/0:0H-kblockd]
+root        8090  0.1  0.0      0     0 ?        I    09:32   0:00 [kworker/u8:2-flush-8:0]
+root        8057  0.2  0.0      0     0 ?        I    09:31   0:01 [kworker/1:1-events]
+```
+
+**Key metrics**
+
+* **RSS(Resident Set Size):** Actual physical RAM used by the process (Most important)
+* **VSZ(Virtual Size):**Virtual memory allocated (includes swap and shared libraries)
+* **%MEM:**Percentage of total RAM
+
+**Important:** RSS can be misleading for processes sharing libraries. Multiple processes might share the same library in memory, but RSS counts it for each.
+
+### Real-World Troubleshooting Flow
+
+When investigating memory issues:
+
+1. **Check available memory:** Run `free -h` - focus on "available" column. Is available <10%?
+2. **Check swap activity:** Run `vmstat 1` watch si/so columns. Is si/so > 0?
+3. **Identify memory hogs:** Run `ps aux -o --sort=-pid,user,%mem,rss,vsz,cmd`
+4. **Check for OOM killers:** When Linux runs completely out of memory, the OOM killer terminates processes. Check id this happened:
+Run:
+`dmesg | grep -i "out of memory"`
+`dmesg | grep -i "kill`
+`journalctl -k | grep -i "oom"`
+5. **Check for leaks:** Memory leaks show as gradual, steady increase in a process's memory usage over time.
+
+**Watch specific process**
+`watch -n 5 "ps aux | grep <process_name"`
+
+Or use
+`pidstat -r -p <PID> 5`
+The -r flag shows memory statistics. If RSS consistently grows without corresponding workload increase, suspect a leak.
+
+Memory monitoring is about understanding that low "free" memory is normal and healthy in Linux. The real indicators are available memory, swap activity, and whether processes can get memory they need. 

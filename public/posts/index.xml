@@ -6,7 +6,26 @@
     <description>Recent content in posts on My Linux Dojo</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-gb</language>
-    <lastBuildDate>Mon, 15 Dec 2025 09:40:18 +0300</lastBuildDate><atom:link href="http://localhost:1313/posts/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Thu, 08 Jan 2026 08:46:13 +0300</lastBuildDate><atom:link href="http://localhost:1313/posts/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Today I Learned Memory_monitoring_and_troubleshooting</title>
+      <link>http://localhost:1313/posts/memory_monitoring_and_troubleshooting/</link>
+      <pubDate>Thu, 08 Jan 2026 08:46:13 +0300</pubDate>
+      
+      <guid>http://localhost:1313/posts/memory_monitoring_and_troubleshooting/</guid>
+      
+      <description>&lt;h3 id=&#34;understanding-linux-memory-management-philosophy&#34;&gt;Understanding Linux Memory management Philosophy&lt;/h3&gt;
+&lt;p&gt;Linux follows this principle: &amp;ldquo;Free memory is wasted memory.&amp;rdquo;&lt;/p&gt;
+&lt;p&gt;The kernel aggressively used unused RAM for caching disk data. This dramatically improves performance, but it confuses people who see &amp;ldquo;low free memory&amp;rdquo; and panic. The key is understanding what memory is truly available, not free.&lt;/p&gt;
+&lt;h3 id=&#34;memory-analysis-free-command---your-starting-point&#34;&gt;Memory Analysis: &lt;code&gt;free&lt;/code&gt; command - your starting point&lt;/h3&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;$ free -h
+               total        used        free      shared  buff/cache   available
+Mem:           3.3Gi       1.9Gi       119Mi        65Mi       1.6Gi       1.4Gi
+Swap:          3.9Gi       524Ki       3.9Gi
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;Important column explained:&lt;/p&gt;</description>
+      
+    </item>
+    
     <item>
       <title>Today I Learned CPU monitoring and troubleshooting</title>
       <link>http://localhost:1313/posts/cpu_monitoring_and_troubleshooting/</link>
