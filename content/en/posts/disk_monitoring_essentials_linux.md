@@ -172,7 +172,7 @@ df -i 			# Shows 100% inode usage
  
  1. **CPU high with high I/O wait?** - it's a disk problem, not CPU.
  2. **System slow with low CPU/Memory?** - Check disk I/O.
- 3. **Disk space OK but can't create new files? - Check inode usage.
+ 3. **Disk space OK but can't create new files?** - Check inode usage.
  
 It's always better to set up automated alerts when disk usage exceeds 80% 0r when `%util` stays above 90% for more than 5 minutes. Prevention beats emergency fire fighting.
 
