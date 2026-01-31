@@ -53,7 +53,7 @@
         },
         "datePublished": "2026-01-08",
         "description": "",
-        "wordCount":  542 ,
+        "wordCount":  554 ,
         "mainEntityOfPage": "True",
         "dateModified": "2026-01-08",
         "image": {
@@ -244,14 +244,42 @@ Swap:          3.9Gi       524Ki       3.9Gi
 </ul>
 <p>The golden rule: Focus on <strong>available</strong> not free.</p>
 <h3 id="memory-health-assessments">Memory Health Assessments</h3>
-<p><strong>Available</strong>%     			<strong>Status</strong>			<strong>Action</strong>    				 <strong>Risk</strong></p>
-<hr>
-<blockquote>
-<p>20%    		 						Healthy					Normal Operation		None
-10-20%								Monitor					Watch trends    			Low
-5-10%									Warning					Identify hogs				Medium
-&lt;5%										Critical					Immediate Action		High</p>
-</blockquote>
+<table>
+  <thead>
+      <tr>
+          <th>Available %</th>
+          <th>status</th>
+          <th>Action</th>
+          <th>Risk</th>
+      </tr>
+  </thead>
+  <tbody>
+      <tr>
+          <td>&gt;20%</td>
+          <td>Healthy</td>
+          <td>Normal operation</td>
+          <td>None</td>
+      </tr>
+      <tr>
+          <td>10-20%</td>
+          <td>Monitor</td>
+          <td>Watch trends</td>
+          <td>Low</td>
+      </tr>
+      <tr>
+          <td>5-10%</td>
+          <td>Warning</td>
+          <td>Identify memory hogs</td>
+          <td>Medium</td>
+      </tr>
+      <tr>
+          <td>&lt;5%</td>
+          <td>Critical</td>
+          <td>Immediate Action</td>
+          <td>High</td>
+      </tr>
+  </tbody>
+</table>
 <p><strong>Watch Memory in Real-Time</strong></p>
 <p><code>watch -n 1 free -h</code></p>
 <p>This updates every second, letting you see memory consumption patterns during operations.</p>
@@ -298,7 +326,8 @@ Run:
 <p>Or use
 <code>pidstat -r -p &lt;PID&gt; 5</code>
 The -r flag shows memory statistics. If RSS consistently grows without corresponding workload increase, suspect a leak.</p>
-<p>Memory monitoring is about understanding that low &ldquo;free&rdquo; memory is normal and healthy in Linux. The real indicators are available memory, swap activity, and whether processes can get memory they need.</p>
+<p><strong>Key Takeaway:</strong> In Linux, low &ldquo;free&rdquo; memory is good. Watch &ldquo;available&rdquo; memory and swap activity (si/so) instead. These are your real indicators of memory health.</p>
+<p><em>What memory issues did you encounter in production? How did you diagnose them? Share your experiences!</em></p>
 
             </div>
         </article></main>

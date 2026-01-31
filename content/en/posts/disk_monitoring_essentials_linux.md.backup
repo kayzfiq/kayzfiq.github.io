@@ -1,0 +1,179 @@
++++
+date = '2026-01-29T08:43:41+03:00'
+draft = false
+title = 'Today I Learned Disk monitoring essentials Linux Admins'
++++
+## Disk Monitoring Essentials for Linux SysAdmins
+
+Disk issues are silent killers of performance. A saturated disk can make your [CPU](https://kayzfiq.github.io/posts/cpu_monitoring_and_troubleshooting/) look slow and your [memory](https://kayzfiq.github.io/posts/memory_monitoring_and_troubleshooting/) appear insufficient. Here's how to monitor disk health effectively.
+
+### Two critical aspects: Space and performance
+
+Most Admins only check disk space, but disk I/O performance is equally critical. You need to monitor both!
+
+### Disk space monitoring basics:
+
+**Filesystem usage**
+
+`df -h`
+
+**Find what's consuming space**
+
+`du -sh /var/log/*`
+
+`du -sh /home/*`
+
+Use `ncdu` command for interactive exploration
+
+**Warning thresholds**
+
+*  `>` 80% full = start planning cleanup
+*  `>`90% full = urgent attention needed
+*   `>`95% full = performance degradation, possible failures
+
+Many filesystems slow down significantly when nearly full.
+
+### The hidden problem: Inodes
+
+You can run out of **inodes** (file slots) even with plenty of space remaining!
+
+**Check inode usage**
+
+`df -i`
+
+If `inode` usage hits 100%, you can not create new files even with free space.
+
+**Quick Space Recovery**
+
+**Find large files**
+
+`find / -type f -size +1G -exec ls -lh {} \;`
+
+**Find old log files**
+
+`find /var/log -type f -mtime +30 -size +100M`
+
+**Check deleted files still help open (space not freed)**
+
+`lsof | grep deleted`
+
+Restart services holding deleted files to actually free the space.
+
+### Disk I/O Performance: critical part
+
+**understanding `iostat`**
+
+`iostat -x -h 1`
+
+**Key metrics to watch**
+
+**%uti**l - Disk utilization percentage
+
+* `<60%` = Healthy
+* 60-80% = Getting busy
+* `>90%` = Saturated, performance degrading
+* 100% = Disk bottleneck
+
+**await** - Average wait time for I/O requests (milliseconds)
+
+* NVMe: `<10ms` = Good
+* SSD: `<20ms` = Acceptable
+* HDD: `<30ms` = Normal
+* `>100ms` = Problem regardless of disk type
+
+**r/s&w/s** - Reads and writes per second. Helps identify read-heavy vs write-heavy workloads.
+
+**rkB/s&wkB/s** - Throughput in KB/s.
+
+**Finding I/O Hogs**
+
+```
+iotop                #Which processes are doing I/O
+
+iotop -o           #Sort by I/O usage
+
+iotop -b -n 3   #Non-interative mode
+```
+
+### Disk Errors and Health 
+
+**Check for hardware issues**
+
+```
+dmesg | grep -i "error\|fail"        #kernel ring buffer for disk errors
+
+smartctl -a /dev/sda         #smart data for disk health
+```
+
+**SMART attributes to watch for:**
+
+* **Reallocated sectors** - should be 0
+* **Current pending sectors** - Growing numbers = failing disk
+* **Temperature** - Keep below 50C for HDDs, 70C for SSDs
+
+### The I/O Wait Mystery Solved
+
+Remember from [CPU monitoring](https://kayzfiq.github.io/posts/cpu_monitoring_and_troubleshooting/)? High %wa(I/O wait) in `top` command points to disk issues.
+
+Correlation checks:
+
+```
+# Terminal 1: watch CPU 
+top
+
+# Terminal 2: watch disk 
+iostat -x 1
+
+```
+If CPU shows high `wa` AND `iostat` shows high `%util or await`, you've found your bottleneck.
+
+### Common Disk Scenarios
+
+**Scenario 1: Database slowdown:**
+
+```
+iostat -x 1
+# Shows: %util at 100%, high await times
+iotop
+# Shows: postgres/mysql doing heavy writes
+```
+
+**Solution:** Optimize queries, add indexes, consider faster storage, or implement read replica.
+
+**Scenario 2: Log Explosion**
+
+```
+df -h
+# Shows: /var at 95%
+du -sh /var/log/*
+# Shows: application.log at 50GB
+```
+**Solution:** Implement log rotation, compress old logs or move to centralized logging.
+
+**Scenario 3: Invisible Full Disk**
+
+```
+df -h 			# Shows 50% usage
+
+df -i 			# Shows 100% inode usage
+```
+**Solution:** Find and remove millions of small files, often in cache or temp directories.
+
+### Quick Troubleshooting Flow:
+
+1. **Check disk space:** `df -h` and  `df -i`
+2. **I/O performance:** `iostat -x 1`  check for `%util` and `await`
+3. **Find culprits:** `iotop` - which processes doing I/O
+4. **Correlate with CPU:** Does high I/O match high `wa` in 	`top` command
+5. **Check for errors:** 	`dmesg | grep -i error`
+6. **Check disk health:** run `smartctl -H /dev/sda`
+
+ ### 3 monitoring rules to remember:
+ 
+ 1. **CPU high with high I/O wait?** - it's a disk problem, not CPU.
+ 2. **System slow with low CPU/Memory?** - Check disk I/O.
+ 3. **Disk space OK but can't create new files? - Check inode usage.
+ 
+It's always better to set up automated alerts when disk usage exceeds 80% 0r when `%util` stays above 90% for more than 5 minutes. Prevention beats emergency fire fighting.
+
+*What* 
